@@ -1,0 +1,2661 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Eyadaty — Nurse Workspace Demo</title>
+    <style>
+      :root {
+        --bg: #f5f7fb;
+        --panel: #fff;
+        --ink: #192b43;
+        --muted: #718198;
+        --line: #e5ebf2;
+        --brand: #176b67;
+        --brand2: #e5f5f2;
+        --blue: #3567c8;
+        --bluebg: #edf3ff;
+        --amber: #a56611;
+        --amberbg: #fff4df;
+        --red: #b84444;
+        --redbg: #fff0f0;
+        --green: #177a58;
+        --greenbg: #e7f7ef;
+        --shadow: 0 5px 24px rgba(26, 47, 76, 0.055);
+        --radius: 16px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font:
+          14px/1.45 Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      .app {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 246px minmax(0, 1fr);
+      }
+      aside {
+        background: #102f3d;
+        color: #eaf4f7;
+        padding: 24px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+      .brand {
+        display: flex;
+        gap: 11px;
+        align-items: center;
+        padding: 0 9px 20px;
+        border-bottom: 1px solid #2d4b57;
+      }
+      .brandmark {
+        height: 39px;
+        width: 39px;
+        border-radius: 13px;
+        background: #d9f3ed;
+        color: #125e5b;
+        display: grid;
+        place-items: center;
+        font-size: 23px;
+        font-weight: 800;
+      }
+      .brand strong {
+        font-size: 17px;
+        letter-spacing: -0.3px;
+      }
+      .brand small {
+        display: block;
+        color: #9db7c0;
+        font-size: 11px;
+        margin-top: 2px;
+      }
+      .navlabel {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1.4px;
+        color: #88a7b2;
+        padding: 0 12px;
+        margin-bottom: 5px;
+      }
+      .nav {
+        display: grid;
+        gap: 5px;
+      }
+      .nav button {
+        border: 0;
+        background: transparent;
+        color: #c5d7dc;
+        text-align: left;
+        padding: 11px 12px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 550;
+      }
+      .nav button .ico {
+        width: 19px;
+        text-align: center;
+        font-size: 17px;
+      }
+      .nav button:hover,
+      .nav button.active {
+        background: #214955;
+        color: #fff;
+      }
+      .nav button.active {
+        box-shadow: inset 3px 0 #71d5bf;
+      }
+      .asidebottom {
+        margin-top: auto;
+      }
+      .secure {
+        border: 1px solid #31535e;
+        background: #173b47;
+        border-radius: 12px;
+        padding: 12px;
+        color: #c6dbe0;
+        font-size: 11px;
+      }
+      .secure b {
+        display: block;
+        color: #e8f7f4;
+        margin-bottom: 4px;
+        font-size: 12px;
+      }
+      .main {
+        min-width: 0;
+      }
+      .topbar {
+        height: 76px;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        gap: 18px;
+      }
+      .crumb {
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .doctorid {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+      .avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: #d8eeea;
+        color: #165e5b;
+        font-weight: 800;
+      }
+      .doctorid strong {
+        display: block;
+        font-size: 13px;
+      }
+      .doctorid small {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .page {
+        padding: 27px 32px 44px;
+        max-width: 1600px;
+        margin: auto;
+      }
+      .pagehead {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 22px;
+      }
+      .eyebrow {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        color: var(--brand);
+        font-weight: 800;
+        margin-bottom: 6px;
+      }
+      .pagehead h1 {
+        margin: 0;
+        font-size: 27px;
+        letter-spacing: -0.7px;
+        line-height: 1.2;
+      }
+      .pagehead p {
+        margin: 7px 0 0;
+        color: var(--muted);
+      }
+      .actions {
+        display: flex;
+        gap: 9px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        border: 1px solid transparent;
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-weight: 700;
+        font-size: 12px;
+        background: var(--brand);
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+      }
+      .btn:hover {
+        filter: brightness(0.96);
+      }
+      .btn.secondary {
+        background: #fff;
+        border-color: var(--line);
+        color: var(--ink);
+      }
+      .btn.soft {
+        background: var(--brand2);
+        color: var(--brand);
+      }
+      .btn.small {
+        padding: 7px 10px;
+        font-size: 11px;
+      }
+      .btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .grid {
+        display: grid;
+        gap: 16px;
+      }
+      .kpis {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-bottom: 18px;
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 19px;
+        min-width: 0;
+      }
+      .kpi {
+        display: flex;
+        gap: 13px;
+        align-items: flex-start;
+      }
+      .kpiicon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: var(--brand2);
+        display: grid;
+        place-items: center;
+        font-size: 18px;
+        color: var(--brand);
+        flex-shrink: 0;
+      }
+      .kpi .label {
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .kpi .value {
+        font-size: 27px;
+        letter-spacing: -0.8px;
+        font-weight: 800;
+        margin: 4px 0;
+      }
+      .kpi .hint {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .twocol {
+        grid-template-columns: minmax(0, 1.45fr) minmax(300px, 1fr);
+      }
+      .sectionhead {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 15px;
+      }
+      .sectionhead h2,
+      .card h2 {
+        font-size: 15px;
+        margin: 0;
+        letter-spacing: -0.2px;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .tiny {
+        font-size: 11px;
+      }
+      .tablewrap {
+        overflow: auto;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        white-space: nowrap;
+      }
+      th {
+        text-align: left;
+        color: #8290a2;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        font-weight: 750;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--line);
+      }
+      td {
+        padding: 13px 12px;
+        border-bottom: 1px solid #edf1f5;
+        font-size: 12px;
+      }
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+      tbody tr:hover {
+        background: #fbfcfe;
+      }
+      .patientname {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .miniavatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        background: #eef2fb;
+        color: #405c9b;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+      }
+      .patientname strong {
+        display: block;
+        font-size: 12px;
+      }
+      .patientname small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 2px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 8px;
+        border-radius: 20px;
+        font-size: 10px;
+        font-weight: 750;
+        background: #eef2f7;
+        color: #53647a;
+      }
+      .pill.green {
+        background: var(--greenbg);
+        color: var(--green);
+      }
+      .pill.blue {
+        background: var(--bluebg);
+        color: var(--blue);
+      }
+      .pill.amber {
+        background: var(--amberbg);
+        color: var(--amber);
+      }
+      .pill.red {
+        background: var(--redbg);
+        color: var(--red);
+      }
+      .searchbar {
+        display: flex;
+        gap: 9px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+      }
+      .dashboard-searchbar {
+        margin-bottom: 0px;
+      }
+      .dashboard-search-container {
+        margin-bottom: 19px;
+      }
+      .input,
+      .select,
+      textarea {
+        width: 100%;
+        border: 1px solid #dce4ed;
+        border-radius: 9px;
+        padding: 10px 11px;
+        background: #fff;
+        color: var(--ink);
+        outline: none;
+      }
+      .input:focus,
+      .select:focus,
+      textarea:focus {
+        border-color: #69aaa2;
+        box-shadow: 0 0 0 3px #e4f4f1;
+      }
+      .searchbar .input {
+        max-width: 370px;
+      }
+      .field {
+        display: grid;
+        gap: 6px;
+      }
+      .field label {
+        font-size: 11px;
+        color: #65768b;
+        font-weight: 750;
+      }
+      .formgrid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px;
+      }
+      .field.full {
+        grid-column: 1/-1;
+      }
+      .patienthero {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .patienthero .bigavatar {
+        height: 58px;
+        width: 58px;
+        border-radius: 17px;
+        background: #e0efed;
+        color: #155c58;
+        display: grid;
+        place-items: center;
+        font-weight: 850;
+        font-size: 20px;
+      }
+      .patienthero h2 {
+        font-size: 21px;
+        margin: 0;
+      }
+      .patienthero p {
+        margin: 5px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .patient-profile-shell {
+        display: grid;
+        gap: 18px;
+      }
+      .patient-profile-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 20px 22px;
+      }
+      .patient-profile-identity {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .patient-profile-identity h2 {
+        margin: 3px 0 4px;
+        font-size: 23px;
+        letter-spacing: -0.5px;
+      }
+      .patient-meta-line {
+        display: flex;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 12px;
+        flex-wrap: wrap;
+      }
+      .patient-head-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+      .privacy-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        border: 1px solid #d9e3ea;
+        background: #f7fafc;
+        color: #607386;
+        border-radius: 999px;
+        padding: 7px 10px;
+        font-size: 10px;
+        font-weight: 750;
+      }
+      .privacy-badge.clinical {
+        border-color: #cde6df;
+        background: #effaf7;
+        color: #236e64;
+      }
+      .profile-section {
+        padding: 22px;
+      }
+      .profile-section-head {
+        align-items: flex-start;
+      }
+      .profile-section-head h2 {
+        font-size: 17px;
+        margin: 0;
+      }
+      .profile-section-head p {
+        margin: 4px 0 0;
+      }
+      .section-badge {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 7px 10px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 700;
+      }
+      .patient-info-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        overflow: hidden;
+      }
+      .patient-info-cell {
+        background: #fff;
+        padding: 14px 15px;
+        min-height: 68px;
+      }
+      .patient-info-cell .info-value {
+        font-size: 13px;
+      }
+      .clinical-section {
+        border-color: #d8e9e5;
+      }
+      .clinical-section .profile-section-head {
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--line);
+      }
+      .clinical-eyebrow {
+        color: #27786d;
+      }
+      .clinical-actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+      .clinical-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 190px;
+        gap: 20px;
+        padding-top: 20px;
+      }
+      .clinical-main {
+        min-width: 0;
+      }
+      .clinical-block {
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .clinical-block + .clinical-block {
+        margin-top: 16px;
+      }
+      .clinical-block-head {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .clinical-block-head h3 {
+        font-size: 13px;
+        margin: 0;
+      }
+      .clinical-block-head p {
+        margin: 3px 0 0;
+      }
+      .compact-select {
+        width: auto;
+        min-width: 130px;
+        padding: 7px 9px;
+      }
+      .doctor-note {
+        padding: 14px 16px;
+        border-bottom: 1px solid #edf1f5;
+        font-size: 12px;
+        line-height: 1.6;
+      }
+      .doctor-note:last-child {
+        border-bottom: 0;
+      }
+      .doctor-note-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .history-simple-list {
+        padding: 10px;
+      }
+      .history-simple-card {
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        padding: 13px 14px;
+        margin-bottom: 9px;
+        background: #fff;
+      }
+      .history-simple-card:last-child {
+        margin-bottom: 0;
+      }
+      .history-card-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .history-date {
+        font-size: 12px;
+        font-weight: 800;
+      }
+      .history-card-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .history-diagnosis {
+        margin-top: 11px;
+        padding: 10px 12px;
+        background: #f7fafc;
+        border-radius: 9px;
+        display: grid;
+        gap: 3px;
+      }
+      .history-diagnosis span {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #8290a2;
+        font-weight: 750;
+      }
+      .history-diagnosis strong {
+        font-size: 12px;
+      }
+      .clinical-summary {
+        display: grid;
+        align-content: start;
+        gap: 10px;
+      }
+      .summary-card {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 13px;
+        background: #fbfcfd;
+      }
+      .summary-card .summary-label {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+      }
+      .summary-card strong {
+        display: block;
+        font-size: 24px;
+        line-height: 1.2;
+        margin: 4px 0;
+      }
+      .summary-card small {
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .clinical-security {
+        border: 1px solid #cde6df;
+        background: #f1faf7;
+        border-radius: 12px;
+        padding: 13px;
+        color: #376f68;
+        font-size: 10px;
+        line-height: 1.55;
+      }
+      .clinical-security b {
+        font-size: 11px;
+      }
+      .clinical-security p {
+        margin: 6px 0 0;
+      }
+      .empty.compact {
+        padding: 22px;
+        font-size: 11px;
+      }
+      .history-prescription {
+        margin-top: 8px;
+        padding: 10px 12px;
+        background: #f0faf7;
+        border-radius: 9px;
+        display: grid;
+        gap: 3px;
+      }
+      .history-prescription span {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #4f857c;
+        font-weight: 750;
+      }
+      .history-prescription strong {
+        font-size: 12px;
+        color: #205f58;
+      }
+      .prescription-list {
+        display: grid;
+        gap: 8px;
+      }
+      .prescription-item {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 11px 12px;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        background: #fbfdfd;
+      }
+      .prescription-item strong {
+        display: block;
+        font-size: 12px;
+      }
+      .prescription-item span,
+      .prescription-item small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 3px;
+      }
+      .rx-editor {
+        display: grid;
+        gap: 10px;
+      }
+      .rx-row {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr 1fr 0.8fr;
+        gap: 9px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        background: #fbfcfd;
+        position: relative;
+      }
+      .rx-row .full {
+        grid-column: 1/-1;
+      }
+      .rx-remove {
+        justify-self: end;
+        grid-column: 1/-1;
+      }
+      .profilegrid {
+        grid-template-columns: minmax(270px, 0.85fr) minmax(0, 1.6fr);
+        align-items: start;
+      }
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 18px;
+      }
+      .info-label {
+        font-size: 10px;
+        color: #8290a2;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        margin-bottom: 4px;
+      }
+      .info-value {
+        font-weight: 650;
+        font-size: 12px;
+        overflow-wrap: anywhere;
+      }
+      .section-title {
+        font-size: 13px;
+        font-weight: 800;
+        margin: 0 0 14px;
+      }
+      .tabs {
+        display: flex;
+        gap: 5px;
+        border-bottom: 1px solid var(--line);
+        margin: 15px 0 17px;
+        overflow: auto;
+      }
+      .tab {
+        padding: 10px 13px;
+        border: 0;
+        border-bottom: 2px solid transparent;
+        background: transparent;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 750;
+        white-space: nowrap;
+      }
+      .tab.active {
+        color: var(--brand);
+        border-bottom-color: var(--brand);
+      }
+      .historylist {
+        display: grid;
+        gap: 12px;
+      }
+      .historyitem {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 15px;
+      }
+      .historytop {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .historytop strong {
+        font-size: 12px;
+      }
+      .diagnosis {
+        background: #f6f9fc;
+        border-radius: 9px;
+        padding: 11px;
+        margin-top: 11px;
+      }
+      .diagnosis label {
+        font-size: 10px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        display: block;
+        margin-bottom: 4px;
+      }
+      .diagnosis p {
+        font-size: 12px;
+        margin: 0;
+        font-weight: 650;
+      }
+      .note {
+        border-left: 3px solid #72b9ab;
+        background: #f3faf8;
+        border-radius: 0 10px 10px 0;
+        padding: 13px;
+        margin-bottom: 10px;
+      }
+      .note p {
+        margin: 6px 0 0;
+        font-size: 12px;
+        white-space: pre-wrap;
+      }
+      .callout {
+        border: 1px solid #cce7e1;
+        background: #f1faf7;
+        border-radius: 11px;
+        padding: 12px;
+        color: #356e67;
+        font-size: 11px;
+        margin-top: 14px;
+      }
+      .queueitem {
+        display: grid;
+        grid-template-columns: 32px minmax(0, 1fr) auto;
+        gap: 11px;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .queueitem:last-child {
+        border: 0;
+      }
+      .queue-num {
+        height: 30px;
+        width: 30px;
+        border-radius: 9px;
+        background: #eef4f5;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        color: #42606a;
+      }
+      .queueitem strong {
+        display: block;
+        font-size: 12px;
+      }
+      .queueitem small {
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .bar {
+        height: 6px;
+        border-radius: 9px;
+        background: #edf1f5;
+        overflow: hidden;
+      }
+      .bar span {
+        display: block;
+        height: 100%;
+        background: #2c9584;
+        border-radius: 9px;
+      }
+      .empty {
+        text-align: center;
+        padding: 35px;
+        color: var(--muted);
+      }
+      .hidden {
+        display: none !important;
+      }
+      .toast {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 30;
+        background: #163d42;
+        color: white;
+        padding: 13px 17px;
+        border-radius: 11px;
+        box-shadow: 0 8px 35px #102f3d33;
+        font-size: 12px;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: 0.2s;
+        pointer-events: none;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .modalback {
+        position: fixed;
+        inset: 0;
+        background: #10253670;
+        z-index: 40;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+      }
+      .modalback.show {
+        display: flex;
+      }
+      .modal {
+        width: min(650px, 100%);
+        max-height: 90vh;
+        overflow: auto;
+        background: #fff;
+        border-radius: 18px;
+        padding: 23px;
+        box-shadow: 0 20px 70px #0c26384a;
+      }
+      .modalhead {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+      .modalhead h2 {
+        margin: 0;
+        font-size: 18px;
+      }
+      .x {
+        border: 0;
+        background: #f0f3f7;
+        border-radius: 9px;
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+      }
+      .modalfoot {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        margin-top: 18px;
+      }
+      .footerhint {
+        margin-top: 15px;
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .mobilemenu {
+        display: none;
+      }
+      @media (max-width: 1100px) {
+        .app {
+          grid-template-columns: 210px minmax(0, 1fr);
+        }
+        .page {
+          padding: 23px 20px;
+        }
+        .topbar {
+          padding: 0 20px;
+        }
+        .kpis {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .twocol {
+          grid-template-columns: 1fr;
+        }
+        .patient-profile-shell {
+          display: grid;
+          gap: 18px;
+        }
+        .patient-profile-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 20px;
+          padding: 20px 22px;
+        }
+        .patient-profile-identity {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+        }
+        .patient-profile-identity h2 {
+          margin: 3px 0 4px;
+          font-size: 23px;
+          letter-spacing: -0.5px;
+        }
+        .patient-meta-line {
+          display: flex;
+          gap: 8px;
+          color: var(--muted);
+          font-size: 12px;
+          flex-wrap: wrap;
+        }
+        .patient-head-actions {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
+          justify-content: flex-end;
+        }
+        .privacy-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          border: 1px solid #d9e3ea;
+          background: #f7fafc;
+          color: #607386;
+          border-radius: 999px;
+          padding: 7px 10px;
+          font-size: 10px;
+          font-weight: 750;
+        }
+        .privacy-badge.clinical {
+          border-color: #cde6df;
+          background: #effaf7;
+          color: #236e64;
+        }
+        .profile-section {
+          padding: 22px;
+        }
+        .profile-section-head {
+          align-items: flex-start;
+        }
+        .profile-section-head h2 {
+          font-size: 17px;
+          margin: 0;
+        }
+        .profile-section-head p {
+          margin: 4px 0 0;
+        }
+        .section-badge {
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          padding: 7px 10px;
+          color: var(--muted);
+          font-size: 10px;
+          font-weight: 700;
+        }
+        .patient-info-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 1px;
+          background: var(--line);
+          border: 1px solid var(--line);
+          border-radius: 13px;
+          overflow: hidden;
+        }
+        .patient-info-cell {
+          background: #fff;
+          padding: 14px 15px;
+          min-height: 68px;
+        }
+        .patient-info-cell .info-value {
+          font-size: 13px;
+        }
+        .clinical-section {
+          border-color: #d8e9e5;
+        }
+        .clinical-section .profile-section-head {
+          padding-bottom: 18px;
+          border-bottom: 1px solid var(--line);
+        }
+        .clinical-eyebrow {
+          color: #27786d;
+        }
+        .clinical-actions {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+          flex-wrap: wrap;
+          justify-content: flex-end;
+        }
+        .clinical-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) 190px;
+          gap: 20px;
+          padding-top: 20px;
+        }
+        .clinical-main {
+          min-width: 0;
+        }
+        .clinical-block {
+          border: 1px solid var(--line);
+          border-radius: 13px;
+          overflow: hidden;
+          background: #fff;
+        }
+        .clinical-block + .clinical-block {
+          margin-top: 16px;
+        }
+        .clinical-block-head {
+          padding: 14px 16px;
+          border-bottom: 1px solid var(--line);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+        }
+        .clinical-block-head h3 {
+          font-size: 13px;
+          margin: 0;
+        }
+        .clinical-block-head p {
+          margin: 3px 0 0;
+        }
+        .compact-select {
+          width: auto;
+          min-width: 130px;
+          padding: 7px 9px;
+        }
+        .doctor-note {
+          padding: 14px 16px;
+          border-bottom: 1px solid #edf1f5;
+          font-size: 12px;
+          line-height: 1.6;
+        }
+        .doctor-note:last-child {
+          border-bottom: 0;
+        }
+        .doctor-note-top {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 6px;
+          color: var(--muted);
+          font-size: 10px;
+        }
+        .history-simple-list {
+          padding: 10px;
+        }
+        .history-simple-card {
+          border: 1px solid var(--line);
+          border-radius: 11px;
+          padding: 13px 14px;
+          margin-bottom: 9px;
+          background: #fff;
+        }
+        .history-simple-card:last-child {
+          margin-bottom: 0;
+        }
+        .history-card-head {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 12px;
+        }
+        .history-date {
+          font-size: 12px;
+          font-weight: 800;
+        }
+        .history-card-actions {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .history-diagnosis {
+          margin-top: 11px;
+          padding: 10px 12px;
+          background: #f7fafc;
+          border-radius: 9px;
+          display: grid;
+          gap: 3px;
+        }
+        .history-diagnosis span {
+          font-size: 9px;
+          text-transform: uppercase;
+          letter-spacing: 0.8px;
+          color: #8290a2;
+          font-weight: 750;
+        }
+        .history-diagnosis strong {
+          font-size: 12px;
+        }
+        .clinical-summary {
+          display: grid;
+          align-content: start;
+          gap: 10px;
+        }
+        .summary-card {
+          border: 1px solid var(--line);
+          border-radius: 12px;
+          padding: 13px;
+          background: #fbfcfd;
+        }
+        .summary-card .summary-label {
+          display: block;
+          color: var(--muted);
+          font-size: 10px;
+          text-transform: uppercase;
+          letter-spacing: 0.7px;
+        }
+        .summary-card strong {
+          display: block;
+          font-size: 24px;
+          line-height: 1.2;
+          margin: 4px 0;
+        }
+        .summary-card small {
+          color: var(--muted);
+          font-size: 10px;
+        }
+        .clinical-security {
+          border: 1px solid #cde6df;
+          background: #f1faf7;
+          border-radius: 12px;
+          padding: 13px;
+          color: #376f68;
+          font-size: 10px;
+          line-height: 1.55;
+        }
+        .clinical-security b {
+          font-size: 11px;
+        }
+        .clinical-security p {
+          margin: 6px 0 0;
+        }
+        .empty.compact {
+          padding: 22px;
+          font-size: 11px;
+        }
+        .history-prescription {
+          margin-top: 8px;
+          padding: 10px 12px;
+          background: #f0faf7;
+          border-radius: 9px;
+          display: grid;
+          gap: 3px;
+        }
+        .history-prescription span {
+          font-size: 9px;
+          text-transform: uppercase;
+          letter-spacing: 0.8px;
+          color: #4f857c;
+          font-weight: 750;
+        }
+        .history-prescription strong {
+          font-size: 12px;
+          color: #205f58;
+        }
+        .prescription-list {
+          display: grid;
+          gap: 8px;
+        }
+        .prescription-item {
+          border: 1px solid var(--line);
+          border-radius: 10px;
+          padding: 11px 12px;
+          display: flex;
+          justify-content: space-between;
+          gap: 12px;
+          background: #fbfdfd;
+        }
+        .prescription-item strong {
+          display: block;
+          font-size: 12px;
+        }
+        .prescription-item span,
+        .prescription-item small {
+          display: block;
+          color: var(--muted);
+          font-size: 10px;
+          margin-top: 3px;
+        }
+        .rx-editor {
+          display: grid;
+          gap: 10px;
+        }
+        .rx-row {
+          display: grid;
+          grid-template-columns: 1.2fr 0.8fr 1fr 0.8fr;
+          gap: 9px;
+          padding: 12px;
+          border: 1px solid var(--line);
+          border-radius: 11px;
+          background: #fbfcfd;
+          position: relative;
+        }
+        .rx-row .full {
+          grid-column: 1/-1;
+        }
+        .rx-remove {
+          justify-self: end;
+          grid-column: 1/-1;
+        }
+        .profilegrid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 700px) {
+        .app {
+          display: block;
+        }
+        aside {
+          display: none;
+          position: fixed;
+          z-index: 25;
+          inset: 0 auto 0 0;
+          width: 260px;
+          box-shadow: 0 0 0 999px #0c243966;
+        }
+        .aside-open aside {
+          display: flex;
+        }
+        .topbar {
+          height: 65px;
+          padding: 0 15px;
+        }
+        .mobilemenu {
+          display: inline-flex;
+        }
+        .page {
+          padding: 20px 13px;
+        }
+        .pagehead {
+          display: block;
+        }
+        .pagehead h1 {
+          font-size: 24px;
+        }
+        .pagehead .actions {
+          margin-top: 15px;
+        }
+        .kpis {
+          gap: 10px;
+        }
+        .card {
+          padding: 14px;
+        }
+        .kpi {
+          gap: 9px;
+        }
+        .kpiicon {
+          width: 34px;
+          height: 34px;
+        }
+        .kpi .value {
+          font-size: 23px;
+        }
+        .formgrid {
+          grid-template-columns: 1fr;
+        }
+        .field.full {
+          grid-column: auto;
+        }
+        .info-grid {
+          gap: 12px;
+        }
+        .patienthero h2 {
+          font-size: 18px;
+        }
+        .topbar .crumb {
+          display: none;
+        }
+      }
+      /* Keep inputs/selects at natural height when a sibling field's hint wraps */
+      .field {
+        align-content: start;
+      }
+      /* ---------- Language switcher ---------- */
+      .langswitch {
+        display: inline-flex;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 3px;
+        background: #f7fafc;
+        gap: 2px;
+      }
+      .langswitch button {
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 750;
+        padding: 6px 10px;
+        border-radius: 7px;
+      }
+      .langswitch button.active {
+        background: #fff;
+        color: var(--brand);
+        box-shadow: 0 1px 4px rgba(26, 47, 76, 0.12);
+      }
+      /* ---------- RTL (Arabic) ---------- */
+      html[dir="rtl"] body {
+        font-family:
+          "IBM Plex Sans Arabic",
+          "Segoe UI",
+          Tahoma,
+          system-ui,
+          sans-serif;
+      }
+      html[dir="rtl"] body * {
+        letter-spacing: 0 !important;
+      }
+      html[dir="rtl"] .nav button,
+      html[dir="rtl"] th {
+        text-align: right;
+      }
+      html[dir="rtl"] .nav button.active {
+        box-shadow: inset -3px 0 #71d5bf;
+      }
+      html[dir="rtl"] .note {
+        border-left: 0;
+        border-right: 3px solid #72b9ab;
+        border-radius: 10px 0 0 10px;
+      }
+      html[dir="rtl"] .toast {
+        right: auto;
+        left: 24px;
+      }
+      html[dir="rtl"] [style*="text-align:right"] {
+        text-align: left !important;
+      }
+      html[dir="rtl"] .queue-num,
+      html[dir="rtl"] .avatar,
+      html[dir="rtl"] .miniavatar,
+      html[dir="rtl"] .bigavatar {
+        direction: ltr;
+      }
+      @media (max-width: 700px) {
+        html[dir="rtl"] aside {
+          inset: 0 0 0 auto;
+        }
+        .langswitch button {
+          padding: 6px 8px;
+        }
+        .doctorid > div:last-child {
+          display: none;
+        }
+      }
+      /* ---------- Nurse workspace additions (same tokens) ---------- */
+      .nurse-avatar { background: var(--bluebg); color: var(--blue); }
+      .callout.danger { border-color: #f1caca; background: var(--redbg); color: var(--red); }
+      .kpiicon.amber-ico { background: var(--amberbg); color: var(--amber); }
+      .rowactions { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; justify-content: flex-end; }
+      .status-select { min-width: 140px; font-size: 11px; font-weight: 700; }
+      .searchresults { margin-top: 12px; border-top: 1px solid var(--line); }
+      .searchresults .queueitem { grid-template-columns: 32px minmax(0, 1fr) auto; }
+      #dashresults .callout, #removednotice .callout { margin: 12px 0 0; }
+      #removednotice .callout { margin-bottom: 14px; }
+      .nowstrip { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 6px; }
+      .nowbox { border: 1px solid #cde6df; background: #f1faf7; border-radius: 12px; padding: 11px 13px; }
+      .nowbox.next { border-color: #f3dfb8; background: var(--amberbg); }
+      .nowbox strong { display: block; font-size: 14px; margin-top: 2px; }
+      .nowlabel { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); font-weight: 750; }
+      .prefclinic { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: #fbfcfd; }
+      .prefclinic strong { display: block; font-size: 13px; }
+      .prefclinic small { color: var(--muted); font-size: 11px; }
+      .statusline { display: grid; grid-template-columns: 118px minmax(0, 1fr) 24px; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 12px; }
+      .statusline b { text-align: end; }
+      .queuestats { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 4px; font-size: 12px; }
+      .queue-row.locked { opacity: 0.82; }
+      .locked-card { display: flex; gap: 16px; align-items: flex-start; border-style: dashed; border-color: #cfdcd9; background: repeating-linear-gradient(135deg, #fbfdfc, #fbfdfc 10px, #f6faf9 10px, #f6faf9 20px); }
+      .locked-card h2 { font-size: 15px; margin: 0 0 4px; }
+      .locked-card p { margin: 0 0 10px; max-width: 640px; }
+      .lockicon { width: 44px; height: 44px; flex-shrink: 0; border-radius: 13px; background: #e1efec; display: grid; place-items: center; font-size: 20px; }
+      .lockchips { display: flex; flex-wrap: wrap; gap: 6px; }
+      .lockchips .privacy-badge { text-decoration: line-through; text-decoration-color: #b9c6cf; }
+      .permlist { display: grid; gap: 2px; }
+      .permrow { display: flex; align-items: center; gap: 10px; padding: 8px 4px; border-bottom: 1px solid #edf1f5; font-size: 12px; }
+      .permrow:last-child { border-bottom: 0; }
+      .permmark { width: 22px; height: 22px; border-radius: 7px; display: grid; place-items: center; font-size: 11px; font-weight: 800; flex-shrink: 0; }
+      .permmark.yes { background: var(--greenbg); color: var(--green); }
+      .permmark.no { background: var(--redbg); color: var(--red); }
+      .statusbtns { display: flex; flex-wrap: wrap; gap: 7px; }
+      .statusbtns .btn:disabled { opacity: 1; cursor: default; }
+      .identitystrip { display: flex; gap: 10px; align-items: center; }
+      .idgrid { flex: 1; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .idgrid .patient-info-cell { min-height: 0; padding: 9px 11px; }
+      @media (max-width: 700px) {
+        .nowstrip { grid-template-columns: 1fr; }
+        .idgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .queueitem { grid-template-columns: 32px minmax(0, 1fr); }
+        .queueitem .rowactions { grid-column: 1 / -1; justify-content: flex-start; }
+        .locked-card { flex-direction: column; }
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap"
+    />
+  </head>
+  <body>
+    <div class="app" id="app">
+      <aside>
+        <div class="brand">
+          <div class="brandmark">✚</div>
+          <div>
+            <strong>Eyadaty</strong><small>Nurse workspace</small>
+          </div>
+        </div>
+        <div>
+          <div class="navlabel">Workspace</div>
+          <nav class="nav" id="nav"></nav>
+        </div>
+        <div class="asidebottom">
+          <div class="secure">
+            <b>🔒 Operational workspace</b>Diagnoses, prescriptions and doctor
+            notes are never shown in the nurse workspace.
+          </div>
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <div style="display: flex; align-items: center; gap: 12px">
+            <button
+              class="btn secondary mobilemenu"
+              onclick="
+                document.getElementById('app').classList.toggle('aside-open')
+              "
+            >
+              ☰
+            </button>
+            <div class="crumb">
+              Eyadaty <span style="padding: 0 7px">/</span
+              ><span id="crumb">Dashboard</span>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px">
+            <div class="langswitch" data-i18n-skip role="group" aria-label="Language">
+              <button type="button" data-lang="en" onclick="setLang('en')">EN</button
+              ><button type="button" data-lang="ar" onclick="setLang('ar')">العربية</button>
+            </div>
+            <div class="doctorid">
+              <div class="avatar nurse-avatar" id="meavatar">NA</div>
+              <div>
+                <strong id="mename">Nour Ahmed</strong
+                ><small>Nurse · Dr. Ahmed Hassan</small>
+              </div>
+            </div>
+          </div>
+        </header>
+        <section class="page">
+          <div class="pagehead">
+            <div>
+              <div class="eyebrow" id="eyebrow">NURSE WORKSPACE</div>
+              <h1 id="title">Good morning, Nour</h1>
+              <p id="subtitle"></p>
+            </div>
+            <div class="actions" id="headactions"></div>
+          </div>
+          <div id="content"></div>
+        </section>
+      </main>
+    </div>
+    <div class="toast" id="toast"></div>
+    <div
+      class="modalback"
+      id="modalback"
+      onclick="if (event.target === this) closeModal();"
+    >
+      <div class="modal">
+        <div class="modalhead">
+          <h2 id="modaltitle">Add</h2>
+          <button class="x" onclick="closeModal()">×</button>
+        </div>
+        <div id="modalbody"></div>
+        <div class="footerhint">
+          Interactive demo with sample data only. No real patient information is
+          stored or sent.
+        </div>
+      </div>
+    </div>
+    <script>
+      const TODAY = "2026-10-06";
+      const ACTIVE_VISIT_STATUSES = [
+        "Scheduled",
+        "Waiting",
+        "In Consultation",
+        "Completed",
+      ];
+      const REORDERABLE_STATUSES = ["Scheduled", "Waiting"];
+      const VISIT_STATUSES = [
+        "Scheduled",
+        "Waiting",
+        "In Consultation",
+        "Completed",
+        "Cancelled",
+        "No Show",
+      ];
+      const VISIT_TYPES = ["New Visit", "Follow-up"];
+      const demoEntitlements = { patients: 600 };
+      // The nurse API never returns medical fields: visits below carry
+      // operational data only (no complaint, diagnosis, notes or prescription).
+      let me = {
+        id: "N-001",
+        name: "Nour Ahmed",
+        phone: "0100 111 2222",
+        email: "nour@example.test",
+        preferredClinic: "Downtown Clinic",
+        doctor: "Dr. Ahmed Hassan",
+        status: "Active",
+      };
+      let patients = [
+        {
+          id: "PAT-000123",
+          name: "Ahmed Hassan",
+          phone: "0100 123 4567",
+          gender: "Male",
+          age: 42,
+          dob: "1984-03-18",
+          email: "ahmed.h@example.test",
+          address: "New Cairo, Cairo",
+          emergency: "Mona Hassan · 0100 888 1122",
+          initials: "AH",
+          deleted: false,
+        },
+        {
+          id: "PAT-000124",
+          name: "Omar Khaled",
+          phone: "0111 234 5678",
+          gender: "Male",
+          age: 36,
+          dob: "1990-07-09",
+          email: "omar.k@example.test",
+          address: "Nasr City, Cairo",
+          emergency: "Khaled Omar · 0100 555 2222",
+          initials: "OK",
+          deleted: false,
+        },
+        {
+          id: "PAT-000125",
+          name: "Sara Mostafa",
+          phone: "0112 678 9012",
+          gender: "Female",
+          age: 27,
+          dob: "1999-06-03",
+          email: "sara.m@example.test",
+          address: "Nasr City, Cairo",
+          emergency: "Mona Mostafa · 0106 111 2222",
+          initials: "SM",
+          deleted: false,
+        },
+        {
+          id: "PAT-000126",
+          name: "Youssef Adel",
+          phone: "0120 456 7890",
+          gender: "Male",
+          age: 52,
+          dob: "1974-02-11",
+          email: "",
+          address: "Maadi, Cairo",
+          emergency: "Adel Youssef · 0100 333 4444",
+          initials: "YA",
+          deleted: false,
+        },
+        {
+          id: "PAT-000127",
+          name: "Laila Fathy",
+          phone: "0115 987 6543",
+          gender: "Female",
+          age: 33,
+          dob: "1993-01-01",
+          dobEstimated: true,
+          email: "",
+          address: "Heliopolis, Cairo",
+          emergency: "",
+          initials: "LF",
+          deleted: false,
+        },
+        {
+          // Relationship removed by the Doctor: the nurse only ever learns
+          // that a previous record exists for this phone.
+          id: "PAT-000122",
+          name: "",
+          phone: "0101 999 0000",
+          deleted: true,
+        },
+      ];
+      let clinics = [
+        { name: "Downtown Clinic", status: "Active" },
+        { name: "Heliopolis Clinic", status: "Active" },
+      ];
+      let visits = [
+        { id: "V-1024", patient: "PAT-000123", clinic: "Downtown Clinic", date: TODAY, time: "10:20", timeMode: "manual", type: "Follow-up", status: "Waiting", queuePosition: 1, createdBy: "Nour Ahmed" },
+        { id: "V-1025", patient: "PAT-000124", clinic: "Downtown Clinic", date: TODAY, time: "09:40", timeMode: "manual", type: "New Visit", status: "In Consultation", queuePosition: 2, createdBy: "Nour Ahmed" },
+        { id: "V-1027", patient: "PAT-000126", clinic: "Downtown Clinic", date: TODAY, time: "11:30", timeMode: "manual", type: "New Visit", status: "Scheduled", queuePosition: 3, createdBy: "Dr. Ahmed Hassan" },
+        { id: "V-1030", patient: "PAT-000127", clinic: "Downtown Clinic", date: TODAY, time: "11:35", timeMode: "generated", type: "New Visit", status: "Scheduled", queuePosition: 4, createdBy: "Nour Ahmed" },
+        { id: "V-1026", patient: "PAT-000125", clinic: "Heliopolis Clinic", date: TODAY, time: "11:00", timeMode: "manual", type: "Follow-up", status: "Scheduled", queuePosition: 1, createdBy: "Hany Samir" },
+        { id: "V-1028", patient: "PAT-000123", clinic: "Downtown Clinic", date: "2026-08-22", time: "11:10", timeMode: "manual", type: "New Visit", status: "Completed", queuePosition: 1, createdBy: "Nour Ahmed" },
+        { id: "V-1029", patient: "PAT-000123", clinic: "Downtown Clinic", date: "2026-07-12", time: "10:00", timeMode: "manual", type: "New Visit", status: "Completed", queuePosition: 1, createdBy: "Nour Ahmed" },
+        { id: "V-1031", patient: "PAT-000125", clinic: "Heliopolis Clinic", date: "2026-09-02", time: "12:15", timeMode: "manual", type: "New Visit", status: "No Show", queuePosition: 2, createdBy: "Hany Samir" },
+      ];
+      let auditLog = [];
+      let page = "dashboard",
+        selectedPatient = "PAT-000123",
+        queueDate = TODAY,
+        queueClinic = me.preferredClinic,
+        dashSearch = "",
+        toastTimer;
+      const navItems = [
+        ["dashboard", "▦", "Overview"],
+        ["patients", "♙", "Patients"],
+        ["visits", "◷", "Visits"],
+        ["queue", "☷", "Clinic queue"],
+        ["profile", "◎", "My profile"],
+      ];
+      function buildNav() {
+        document.getElementById("nav").innerHTML = navItems
+          .map(
+            ([id, icon, label]) =>
+              `<button id="nav-${id}" class="${page === id || (page === "patientDetail" && id === "patients") ? "active" : ""}" onclick="go('${id}')"><span class="ico">${icon}</span>${label}</button>`,
+          )
+          .join("");
+      }
+      function go(p) {
+        page = p;
+        document.getElementById("app").classList.remove("aside-open");
+        render();
+      }
+      function patient(id) {
+        return patients.find((p) => p.id === id);
+      }
+      function visitById(id) {
+        return visits.find((v) => v.id === id);
+      }
+      function patientVisits(id) {
+        return visits
+          .filter((v) => v.patient === id)
+          .sort((a, b) => (b.date + b.time).localeCompare(a.date + a.time));
+      }
+      function activePatients() {
+        return patients.filter((p) => !p.deleted);
+      }
+      function countedPatients() {
+        return patients.filter(
+          (p) => !p.deleted || patientVisits(p.id).length > 0,
+        );
+      }
+      function normPhone(s) {
+        return String(s || "").replace(/\D/g, "");
+      }
+      function pill(s) {
+        let c =
+          {
+            Waiting: "amber",
+            Scheduled: "blue",
+            "In Consultation": "green",
+            Completed: "green",
+            Cancelled: "red",
+            "No Show": "red",
+            "New Visit": "blue",
+            "Follow-up": "green",
+            Active: "green",
+            Inactive: "red",
+          }[s] || "";
+        return `<span class="pill ${c}">${escapeHtml(s)}</span>`;
+      }
+      function dateFmt(d) {
+        if (!d) return "—";
+        return new Date(d + "T12:00:00").toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        });
+      }
+      function timeFmt(t) {
+        if (!t) return "—";
+        const [h, m] = t.split(":").map(Number);
+        return new Date(1970, 0, 1, h, m).toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+        });
+      }
+      function heading(title, subtitle, eyebrow = "NURSE WORKSPACE", actions = "") {
+        document.getElementById("title").textContent = title;
+        document.getElementById("subtitle").textContent = subtitle;
+        document.getElementById("eyebrow").textContent = eyebrow;
+        document.getElementById("crumb").textContent = title;
+        document.getElementById("headactions").innerHTML = actions;
+      }
+      function render() {
+        buildNav();
+        document.getElementById("mename").textContent = me.name;
+        document.getElementById("meavatar").textContent = initials(me.name);
+        const content = document.getElementById("content");
+        content.innerHTML = "";
+        const views = {
+          dashboard: dashboardView,
+          patients: patientsView,
+          patientDetail: patientDetailView,
+          visits: visitsView,
+          queue: queueView,
+          profile: profileView,
+        };
+        (views[page] || dashboardView)();
+        content.setAttribute("data-current-view", page);
+      }
+      function statusSelect(v) {
+        return `<select class="select compact-select status-select" onchange="setStatus('${v.id}',this.value)" aria-label="Status">${VISIT_STATUSES.map((s) => `<option value="${s}" ${v.status === s ? "selected" : ""}>${s}</option>`).join("")}</select>`;
+      }
+
+      /* ---------------- Dashboard ---------------- */
+      function dashboardView() {
+        const todays = visits.filter((v) => v.date === TODAY);
+        const count = (s) => todays.filter((v) => v.status === s).length;
+        heading(
+          "Good morning, Nour",
+          "Run today's clinic flow: check patients in, keep the queue moving and book visits.",
+          "NURSE DASHBOARD",
+          `<button class="btn secondary" onclick="openModal('patient')">＋ Add patient</button><button class="btn" onclick="openModal('visit')">＋ Create visit</button>`,
+        );
+        const pref = me.preferredClinic;
+        const prefQueue = todays
+          .filter((v) => v.clinic === pref)
+          .sort((a, b) => (a.queuePosition || 999) - (b.queuePosition || 999));
+        const nowServing = prefQueue.find((v) => v.status === "In Consultation");
+        const nextUp = prefQueue.find((v) => v.status === "Waiting");
+        document.getElementById("content").innerHTML =
+          `<div class="card dashboard-search-container"><div class="searchbar dashboard-searchbar"><input class="input" id="dashsearch" placeholder="Search by Patient ID, phone or name…" value="${attr(dashSearch)}" oninput="dashSearch=this.value;renderDashSearch()"><button class="btn soft" onclick="openModal('patient')">＋ New patient</button><span class="tiny muted">Patient ID · Phone · Full name</span></div><div id="dashresults"></div></div>
+<div class="grid kpis"><div class="card kpi"><div class="kpiicon">◷</div><div><div class="label">Today's visits</div><div class="value">${todays.length}</div><div class="hint">All clinics</div></div></div><div class="card kpi"><div class="kpiicon amber-ico">◉</div><div><div class="label">Waiting</div><div class="value">${count("Waiting")}</div><div class="hint">Checked in</div></div></div><div class="card kpi"><div class="kpiicon">✚</div><div><div class="label">In consultation</div><div class="value">${count("In Consultation")}</div><div class="hint">With the doctor</div></div></div><div class="card kpi"><div class="kpiicon">✓</div><div><div class="label">Completed</div><div class="value">${count("Completed")}</div><div class="hint">Today</div></div></div></div>
+<div class="grid twocol"><div class="card"><div class="sectionhead"><div><h2>Today's queue</h2><div class="tiny muted"><span>${escapeHtml(pref)}</span> · <span>${dateFmt(TODAY)}</span></div></div><button class="btn secondary small" onclick="queueClinic='${attr(pref)}';queueDate=TODAY;go('queue')">Open queue →</button></div><div class="nowstrip"><div class="nowbox"><span class="nowlabel">Now serving</span><strong>${nowServing ? escapeHtml(patient(nowServing.patient)?.name) : "—"}</strong></div><div class="nowbox next"><span class="nowlabel">Next up</span><strong>${nextUp ? escapeHtml(patient(nextUp.patient)?.name) : "—"}</strong></div></div>${
+          prefQueue
+            .map((v) => {
+              const p = patient(v.patient);
+              return `<div class="queueitem"><div class="queue-num">#${v.queuePosition}</div><div><strong>${escapeHtml(p?.name || "Unknown")}</strong><small><span>${timeFmt(v.time)}</span> · <span>${escapeHtml(v.type)}</span></small></div><div class="rowactions">${statusSelect(v)}<button class="btn secondary small" onclick="openVisit('${v.id}')">Open</button></div></div>`;
+            })
+            .join("") || '<div class="empty">No visits in this queue today.</div>'
+        }</div>
+<div class="grid" style="align-content:start"><div class="card"><div class="sectionhead"><h2>Quick actions</h2></div><div class="grid" style="grid-template-columns:1fr 1fr;gap:9px"><button class="btn" onclick="openModal('patient')">＋ Add patient</button><button class="btn secondary" onclick="openModal('visit')">＋ Create visit</button><button class="btn secondary" onclick="document.getElementById('dashsearch').focus()">⌕ Find patient</button><button class="btn secondary" onclick="go('queue')">☷ Open queue</button></div></div><div class="card"><div class="sectionhead"><div><h2>Preferred clinic</h2><div class="tiny muted">Default for new Visits — not a restriction</div></div>${pill("Active")}</div><div class="prefclinic"><div class="kpiicon">⌂</div><div><strong>${escapeHtml(pref)}</strong><small>${prefQueue.length} visits today</small></div></div></div><div class="card"><div class="sectionhead"><div><h2>Visit status counts</h2><div class="tiny muted">Today · All clinics</div></div></div>${VISIT_STATUSES.map((s) => {
+            const n = count(s);
+            return `<div class="statusline">${pill(s)}<div class="bar"><span style="width:${todays.length ? Math.max(4, (n / todays.length) * 100) : 0}%"></span></div><b>${n}</b></div>`;
+          }).join("")}<div class="callout"><b>Operational access.</b> You manage patients, visits and queues for Dr. Ahmed's practice. Medical data stays with the Doctor.</div></div></div></div>`;
+        renderDashSearch();
+      }
+      function searchPatients(q) {
+        q = q.trim().toLowerCase();
+        if (!q) return { hits: [], removed: false };
+        const digits = normPhone(q);
+        const hits = activePatients().filter(
+          (p) =>
+            `${p.name} ${p.id}`.toLowerCase().includes(q) ||
+            (digits.length >= 3 && normPhone(p.phone).includes(digits)),
+        );
+        const removed =
+          digits.length >= 8 &&
+          patients.some((p) => p.deleted && normPhone(p.phone) === digits);
+        return { hits, removed };
+      }
+      function removedNotice() {
+        return `<div class="callout danger"><b>A previous record exists for this phone.</b> Details are not available in the nurse workspace. Please contact the Doctor — nurses cannot restore patient records.</div>`;
+      }
+      function renderDashSearch() {
+        const el = document.getElementById("dashresults");
+        if (!el) return;
+        if (!dashSearch.trim()) {
+          el.innerHTML = "";
+          return;
+        }
+        const { hits, removed } = searchPatients(dashSearch);
+        el.innerHTML =
+          (removed ? removedNotice() : "") +
+          (hits.length
+            ? `<div class="searchresults">${hits
+                .slice(0, 5)
+                .map(
+                  (p) =>
+                    `<div class="queueitem"><div class="miniavatar">${escapeHtml(p.initials)}</div><div><strong>${escapeHtml(p.name)}</strong><small><span>${escapeHtml(p.id)}</span> · <span>${escapeHtml(p.phone)}</span></small></div><div class="rowactions"><button class="btn secondary small" onclick="openPatient('${p.id}')">View profile →</button><button class="btn small" onclick="openModal('visit',null,'${p.id}')">＋ Visit</button></div></div>`,
+                )
+                .join("")}</div>`
+            : removed
+              ? ""
+              : `<div class="empty compact">No patient found. <button class="btn soft small" onclick="openModal('patient')">＋ Create patient</button></div>`);
+      }
+
+      /* ---------------- Patients ---------------- */
+      function patientsView() {
+        heading(
+          "Patients",
+          "Search by Patient ID, phone or full name. You can create patients and edit their basic information.",
+          "PATIENT DIRECTORY",
+          `<button class="btn" onclick="openModal('patient')">＋ Add patient</button>`,
+        );
+        const active = activePatients();
+        document.getElementById("content").innerHTML =
+          `<div class="card"><div class="searchbar"><input class="input" id="patientsearch" placeholder="Search name, Patient ID or phone…" oninput="filterPatientRows()"><span class="muted tiny" id="patientcount">${active.length} active records</span></div><div id="removednotice"></div><div class="tablewrap"><table><thead><tr><th>Patient</th><th>Phone</th><th>Gender / Age</th><th>Last visit</th><th>Visits</th><th></th></tr></thead><tbody id="patientrows">${patientRows(active)}</tbody></table></div></div><div class="callout"><b>Operational view.</b> Only identity and contact details are shown. Diagnoses, prescriptions and notes are not available to nurses.</div>`;
+      }
+      function filterPatientRows() {
+        const q = document.getElementById("patientsearch")?.value || "";
+        const { hits, removed } = q.trim()
+          ? searchPatients(q)
+          : { hits: activePatients(), removed: false };
+        document.getElementById("patientrows").innerHTML = patientRows(hits);
+        document.getElementById("patientcount").textContent =
+          `${hits.length} active records`;
+        document.getElementById("removednotice").innerHTML = removed
+          ? removedNotice()
+          : "";
+      }
+      function patientRows(arr) {
+        return (
+          arr
+            .map((p) => {
+              const pv = patientVisits(p.id),
+                last = pv[0];
+              return `<tr><td><div class="patientname"><div class="miniavatar">${escapeHtml(p.initials)}</div><div><strong>${escapeHtml(p.name)}</strong><small>${escapeHtml(p.id)}</small></div></div></td><td>${escapeHtml(p.phone)}</td><td>${escapeHtml(p.gender)} · ${escapeHtml(String(p.age || "—"))}</td><td>${last ? dateFmt(last.date) : "—"}</td><td>${pv.length} visit${pv.length === 1 ? "" : "s"}</td><td><button class="btn secondary small" onclick="openPatient('${p.id}')">View profile →</button></td></tr>`;
+            })
+            .join("") ||
+          `<tr><td colspan="6"><div class="empty">No patients match this view.</div></td></tr>`
+        );
+      }
+      function openPatient(id) {
+        selectedPatient = id;
+        page = "patientDetail";
+        render();
+      }
+      function patientDetailView() {
+        const p = patient(selectedPatient);
+        if (!p || p.deleted) {
+          go("patients");
+          return;
+        }
+        const pv = patientVisits(p.id);
+        heading(
+          p.name,
+          "Operational patient record",
+          "PATIENT PROFILE",
+          `<button class="btn secondary" onclick="go('patients')">← All patients</button><button class="btn" onclick="openModal('visit',null,'${p.id}')">＋ New visit</button>`,
+        );
+        const info = `<div class="card profile-section"><div class="sectionhead profile-section-head"><div><h2>Patient information</h2><p class="tiny muted">Basic identity and contact information. This section is operational, not clinical.</p></div><span class="privacy-badge">Visible to Doctor & Nurse</span></div><div class="patient-info-grid">${infoCell("Patient ID", p.id)}${infoCell("Full name", p.name)}${infoCell("Phone", p.phone)}${infoCell("Gender", p.gender)}${infoCell("Age", p.age)}${infoCell("Date of birth", p.dob ? dateFmt(p.dob) + (p.dobEstimated ? " · estimated" : "") : "Not provided")}${infoCell("Email", p.email)}${infoCell("Address", p.address)}${infoCell("Emergency contact", p.emergency)}</div><div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn secondary small" onclick="openModal('editpatient','${p.id}')">Edit patient information</button><span class="tiny muted" style="align-self:center">Patient ID cannot be changed.</span></div></div>`;
+        const visitsHtml = pv.length
+          ? `<div class="tablewrap"><table><thead><tr><th>Visit</th><th>Date / Time</th><th>Clinic</th><th>Type</th><th>Status</th><th></th></tr></thead><tbody>${pv.map((v) => `<tr><td><strong>${v.id}</strong></td><td>${dateFmt(v.date)}<div class="tiny muted">${timeFmt(v.time)}</div></td><td>${escapeHtml(v.clinic)}</td><td>${pill(v.type)}</td><td>${pill(v.status)}</td><td><button class="btn secondary small" onclick="openVisit('${v.id}')">Open</button></td></tr>`).join("")}</tbody></table></div>`
+          : `<div class="empty compact">No visits yet.</div>`;
+        const ops = `<div class="card profile-section"><div class="sectionhead profile-section-head"><div><h2>Visits</h2><p class="tiny muted">Operational visit information only — date, clinic, type and status.</p></div><button class="btn soft small" onclick="openModal('visit',null,'${p.id}')">＋ New visit</button></div>${visitsHtml}</div>`;
+        document.getElementById("content").innerHTML =
+          `<div class="patient-profile-shell"><div class="card patient-profile-head"><div class="patient-profile-identity"><div class="bigavatar">${escapeHtml(p.initials)}</div><div><div class="patient-meta-line">${pill("Active")} <span>${escapeHtml(p.gender)} · ${escapeHtml(String(p.age || "—"))}</span></div><h2>${escapeHtml(p.name)}</h2><div class="patient-meta-line"><span>${escapeHtml(p.id)}</span><span>•</span><span>${escapeHtml(p.phone)}</span></div></div></div><div class="patient-head-actions"><span class="privacy-badge">Operational record</span><button class="btn secondary" onclick="openModal('visit',null,'${p.id}')">＋ Create visit</button></div></div>${info}${ops}${lockedCard()}</div>`;
+      }
+      function lockedCard() {
+        return `<div class="card locked-card"><div class="lockicon">🔒</div><div><div class="eyebrow clinical-eyebrow">Doctor only</div><h2>Medical data is hidden</h2><p class="tiny muted">Chief complaint, diagnosis, doctor notes, prescriptions, follow-up details and General Notes are available to the Doctor only. This is enforced by the server, not just hidden on screen.</p><div class="lockchips"><span class="privacy-badge">Chief complaint</span><span class="privacy-badge">Diagnosis</span><span class="privacy-badge">Doctor notes</span><span class="privacy-badge">Prescription</span><span class="privacy-badge">Follow-up</span><span class="privacy-badge">General Notes</span></div></div></div>`;
+      }
+
+      /* ---------------- Visits ---------------- */
+      function visitsView() {
+        heading(
+          "Visits",
+          "Create, edit and cancel visits, and keep statuses up to date.",
+          "VISIT MANAGEMENT",
+          `<button class="btn" onclick="openModal('visit')">＋ Create visit</button>`,
+        );
+        document.getElementById("content").innerHTML =
+          `<div class="card"><div class="searchbar"><input id="visitsearch" class="input" placeholder="Search patient or Visit ID…" oninput="filterVisits()"><select id="visitclinic" class="select" style="width:auto" onchange="filterVisits()"><option value="all">All clinics</option>${clinics.map((c) => `<option>${escapeHtml(c.name)}</option>`).join("")}</select><select id="visitstatus" class="select" style="width:auto" onchange="filterVisits()"><option value="all">All statuses</option>${VISIT_STATUSES.map((s) => `<option>${s}</option>`).join("")}</select><select id="visittype" class="select" style="width:auto" onchange="filterVisits()"><option value="all">All visit types</option>${VISIT_TYPES.map((s) => `<option>${s}</option>`).join("")}</select></div><div class="tablewrap"><table><thead><tr><th>Visit</th><th>Patient</th><th>Date / Time</th><th>Clinic</th><th>Type</th><th>Status</th><th></th></tr></thead><tbody id="visitrows">${visitRows(visits)}</tbody></table></div></div><div class="callout"><b>Wrong patient?</b> Cancel the Visit and create a new Visit for the correct patient.</div>`;
+      }
+      function filterVisits() {
+        const q = (document.getElementById("visitsearch")?.value || "").toLowerCase(),
+          c = document.getElementById("visitclinic")?.value || "all",
+          s = document.getElementById("visitstatus")?.value || "all",
+          t = document.getElementById("visittype")?.value || "all";
+        const arr = visits.filter((v) => {
+          const p = patient(v.patient);
+          return (
+            `${v.id} ${p?.name || ""} ${p?.id || ""}`.toLowerCase().includes(q) &&
+            (c === "all" || v.clinic === c) &&
+            (s === "all" || v.status === s) &&
+            (t === "all" || v.type === t)
+          );
+        });
+        document.getElementById("visitrows").innerHTML = visitRows(arr);
+      }
+      function visitRows(arr) {
+        return (
+          arr
+            .filter((v) => !patient(v.patient)?.deleted)
+            .slice()
+            .sort((a, b) => (b.date + b.time).localeCompare(a.date + a.time))
+            .map((v) => {
+              const p = patient(v.patient);
+              return `<tr><td><strong>${v.id}</strong></td><td><div class="patientname"><div class="miniavatar">${escapeHtml(p?.initials || "?")}</div><div><strong>${escapeHtml(p?.name || "Unknown")}</strong><small>${escapeHtml(p?.id || "")}</small></div></div></td><td>${dateFmt(v.date)}<div class="tiny muted">${timeFmt(v.time)}${v.timeMode === "generated" ? " · system" : ""}</div></td><td>${escapeHtml(v.clinic)}</td><td>${pill(v.type)}</td><td>${statusSelect(v)}</td><td><button class="btn secondary small" onclick="openVisit('${v.id}')">Open</button> <button class="btn secondary small" onclick="openModal('editvisit','${v.id}')">Edit</button></td></tr>`;
+            })
+            .join("") ||
+          `<tr><td colspan="7"><div class="empty">No visits found.</div></td></tr>`
+        );
+      }
+
+      /* ---------------- Queue ---------------- */
+      function queueView() {
+        heading(
+          "Clinic queue",
+          "You are the primary queue operator. Each clinic has its own queue.",
+          "LIVE QUEUE",
+          `<button class="btn secondary" onclick="openModal('visit')">＋ Add visit</button>`,
+        );
+        const arr = queueList();
+        const c = (s) => arr.filter((v) => v.status === s).length;
+        document.getElementById("content").innerHTML =
+          `<div class="card"><div class="searchbar"><select class="select" style="width:auto" onchange="queueClinic=this.value;render()">${clinics.map((c) => `<option value="${attr(c.name)}" ${queueClinic === c.name ? "selected" : ""}>${escapeHtml(c.name)}</option>`).join("")}</select><input class="input" style="width:auto" type="date" value="${queueDate}" onchange="queueDate=this.value;render()">${queueDate !== TODAY ? `<button class="btn secondary small" onclick="queueDate=TODAY;render()">Today</button>` : ""}<span class="pill blue"><span>${escapeHtml(queueClinic)}</span> · <span>${dateFmt(queueDate)}</span></span></div><div class="queuestats"><div>${pill("Scheduled")} <b>${c("Scheduled")}</b></div><div>${pill("Waiting")} <b>${c("Waiting")}</b></div><div>${pill("In Consultation")} <b>${c("In Consultation")}</b></div><div>${pill("Completed")} <b>${c("Completed")}</b></div></div><div class="callout"><b>Queue rule:</b> Every Visit is listed. Only Scheduled and Waiting visits can be reordered. Reordering changes Queue Position only — never the Visit time.</div><div id="queueRows">${queueRows(arr)}</div></div>`;
+      }
+      function queueList() {
+        return visits
+          .filter(
+            (v) =>
+              v.clinic === queueClinic &&
+              v.date === queueDate &&
+              !patient(v.patient)?.deleted,
+          )
+          .sort((a, b) => (a.queuePosition || 999) - (b.queuePosition || 999));
+      }
+      function queueRows(arr) {
+        if (!arr.length)
+          return `<div class="empty">No visits for this clinic and date.</div>`;
+        return arr
+          .map((v, i) => {
+            const p = patient(v.patient);
+            const can = REORDERABLE_STATUSES.includes(v.status);
+            return `<div class="queueitem queue-row ${can ? "" : "locked"}"><div class="queue-num">#${v.queuePosition || i + 1}</div><div><strong>${escapeHtml(p?.name || "Unknown")}</strong><small><span>${timeFmt(v.time)}</span>${v.timeMode === "generated" ? " · system ordering time" : ""} · <span>${escapeHtml(v.type)}</span> · <span>${escapeHtml(v.id)}</span></small></div><div class="rowactions">${statusSelect(v)}${can ? `<button class="btn secondary small" title="Move up" onclick="moveQueue('${v.id}',-1)">↑</button><button class="btn secondary small" title="Move down" onclick="moveQueue('${v.id}',1)">↓</button>` : `<span class="tiny muted">Position locked</span>`}<button class="btn secondary small" onclick="openVisit('${v.id}')">Open</button></div></div>`;
+          })
+          .join("");
+      }
+      function moveQueue(id, dir) {
+        const v = visitById(id);
+        if (!v || !REORDERABLE_STATUSES.includes(v.status)) return;
+        const arr = visits
+          .filter(
+            (x) =>
+              x.clinic === v.clinic &&
+              x.date === v.date &&
+              REORDERABLE_STATUSES.includes(x.status),
+          )
+          .sort((a, b) => (a.queuePosition || 999) - (b.queuePosition || 999));
+        const idx = arr.findIndex((x) => x.id === id);
+        const target = idx + dir;
+        if (target < 0 || target >= arr.length) return;
+        [arr[idx].queuePosition, arr[target].queuePosition] = [
+          arr[target].queuePosition,
+          arr[idx].queuePosition,
+        ];
+        audit("QUEUE_REORDER", v.id, { from: idx + 1, to: target + 1 });
+        render();
+        toast("Queue position updated. Visit time was not changed.");
+      }
+      function setStatus(id, status) {
+        const v = visitById(id);
+        if (!v || v.status === status) return;
+        if (
+          status === "Cancelled" &&
+          !confirm("Cancel this Visit? Cancelled Visits are kept, never deleted.")
+        ) {
+          render();
+          return;
+        }
+        if (ACTIVE_VISIT_STATUSES.includes(status) && !ACTIVE_VISIT_STATUSES.includes(v.status)) {
+          const clash = visits.some(
+            (x) =>
+              x.id !== v.id &&
+              x.patient === v.patient &&
+              x.date === v.date &&
+              ACTIVE_VISIT_STATUSES.includes(x.status),
+          );
+          if (clash) {
+            render();
+            toast("Blocked: this patient already has an active Visit with this Doctor on the selected date, regardless of clinic.");
+            return;
+          }
+        }
+        const old = v.status;
+        v.status = status;
+        audit("VISIT_STATUS", v.id, { old, new: status });
+        closeModal();
+        render();
+        toast("Visit status updated and audited.");
+      }
+
+      /* ---------------- Profile ---------------- */
+      function profileView() {
+        heading(
+          "My profile",
+          "Your nurse account inside Dr. Ahmed's practice.",
+          "ACCOUNT",
+          `<button class="btn secondary" onclick="openModal('profile')">Edit profile</button>`,
+        );
+        const perms = [
+          ["Search, create & edit patients", true],
+          ["Create, edit & cancel visits", true],
+          ["Change visit status", true],
+          ["Manage & reorder queue", true],
+          ["Diagnosis & doctor notes", false],
+          ["Prescriptions & General Notes", false],
+          ["Delete or restore patients", false],
+          ["Duplicate phone exception", false],
+          ["Manage nurses, clinics & subscription", false],
+        ];
+        document.getElementById("content").innerHTML =
+          `<div class="grid twocol"><div class="card"><div class="patienthero"><div class="bigavatar">${escapeHtml(initials(me.name))}</div><div><h2>${escapeHtml(me.name)}</h2><p>Nurse · Dr. Ahmed Hassan</p></div></div><div class="patient-info-grid" style="margin-top:18px">${infoCell("Full name", me.name)}${infoCell("Phone", me.phone)}${infoCell("Email", me.email)}${infoCell("Preferred clinic", me.preferredClinic)}${infoCell("Doctor", me.doctor)}${infoCell("Account status", me.status)}</div><div class="callout">Your preferred clinic is set by the Doctor. It pre-fills new Visits, and you can change the clinic on any Visit.</div></div><div class="card"><div class="sectionhead"><h2>What you can do</h2><span class="privacy-badge">Same for all nurses</span></div><div class="permlist">${perms.map(([l, ok]) => `<div class="permrow"><span class="permmark ${ok ? "yes" : "no"}">${ok ? "✓" : "✕"}</span><span>${l}</span></div>`).join("")}</div><div class="callout"><b>Tenant isolation</b><br>You only see data that belongs to Dr. Ahmed's practice. Every queue and status change is recorded in the audit log.</div></div></div>`;
+      }
+      function infoCell(label, value) {
+        return `<div class="patient-info-cell"><div class="info-label">${escapeHtml(label)}</div><div class="info-value">${escapeHtml(String(value || "—"))}</div></div>`;
+      }
+
+      /* ---------------- Modals ---------------- */
+      function openVisit(id) {
+        openModal("visitdetail", id);
+      }
+      function openModal(type, arg = null, patientArg = null) {
+        const mb = document.getElementById("modalback"),
+          body = document.getElementById("modalbody"),
+          title = document.getElementById("modaltitle");
+        let html = "";
+        if (type === "patient") {
+          title.textContent = "Add patient";
+          html = patientForm();
+        } else if (type === "editpatient") {
+          title.textContent = "Edit patient information";
+          html = patientForm(patient(arg), true);
+        } else if (type === "duplicatePhone") {
+          title.textContent = "Existing patient found";
+          html = duplicatePhoneModal(arg);
+        } else if (type === "removedPhone") {
+          title.textContent = "Previous record found";
+          html = `${removedNotice()}<div class="modalfoot"><button class="btn secondary" onclick="closeModal()">Close</button><button class="btn" onclick="closeModal();openModal('patient')">Use a different phone</button></div>`;
+        } else if (type === "visit") {
+          title.textContent = "Create Visit";
+          html = visitForm(null, patientArg || "");
+        } else if (type === "editvisit") {
+          const v = visitById(arg);
+          title.textContent = "Edit Visit";
+          html = visitForm(v, v.patient);
+        } else if (type === "visitdetail") {
+          const v = visitById(arg),
+            p = patient(v.patient);
+          title.textContent = `${v.id} · ${p.name}`;
+          html = visitDetailModal(v, p);
+        } else if (type === "profile") {
+          title.textContent = "Edit profile";
+          html = `<form onsubmit="return saveProfile(event)"><div class="formgrid"><div class="field full"><label>Full name *</label><input class="input" name="name" value="${attr(me.name)}" required></div><div class="field"><label>Phone *</label><input class="input" name="phone" value="${attr(me.phone)}" required></div><div class="field"><label>Email</label><input class="input" name="email" value="${attr(me.email)}"></div></div><div class="callout">Your preferred clinic and account status are managed by the Doctor.</div><div class="modalfoot"><button type="button" class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn">Save changes</button></div></form>`;
+        }
+        body.innerHTML = html;
+        mb.classList.add("show");
+        if (type === "visit" || type === "editvisit") syncVisitForm();
+      }
+      function patientForm(p = null, edit = false) {
+        return `<form onsubmit="return ${edit ? `savePatient(event,'${p.id}')` : "savePatient(event)"}"><div class="formgrid">${edit ? `<div class="field full"><label>Patient ID</label><input class="input" value="${attr(p.id)}" disabled></div>` : ""}<div class="field full"><label>Full name *</label><input class="input" name="name" value="${attr(p?.name)}" required></div><div class="field"><label>Phone *</label><input class="input" name="phone" value="${attr(p?.phone)}" required></div><div class="field"><label>Gender *</label><select class="select" name="gender" required><option value="">Select</option>${["Male", "Female"].map((x) => `<option ${p?.gender === x ? "selected" : ""}>${x}</option>`).join("")}</select></div><div class="field"><label>Age</label><input class="input" type="number" min="0" name="age" value="${attr(p?.age)}"></div><div class="field"><label>Date of birth</label><input class="input" type="date" name="dob" value="${attr(p?.dob)}" onchange="ageFromDob(this.form)"></div><div class="field"><label>Email</label><input class="input" name="email" value="${attr(p?.email)}"></div><div class="field full"><label>Address</label><input class="input" name="address" value="${attr(p?.address)}"></div><div class="field full"><label>Emergency contact</label><input class="input" name="emergency" value="${attr(p?.emergency)}"></div></div><div class="callout">Phone numbers are unique. If the phone already exists you'll be shown the existing patient — only the Doctor can approve a duplicate.</div><div class="modalfoot"><button type="button" class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn">${edit ? "Save changes" : "Create patient"}</button></div></form>`;
+      }
+      function visitForm(v = null, pid = "") {
+        const activeClinics = clinics.filter((c) => c.status === "Active");
+        const currentClinic =
+          v?.clinic ||
+          (activeClinics.some((c) => c.name === me.preferredClinic)
+            ? me.preferredClinic
+            : activeClinics[0]?.name || "");
+        return `<form onsubmit="return saveVisit(event${v ? `,'${v.id}'` : ""})"><div class="formgrid"><div class="field full"><label>Patient *</label><select class="select" name="patient" required onchange="syncVisitForm()"><option value="">Select patient</option>${activePatients()
+          .map(
+            (p) =>
+              `<option value="${attr(p.id)}" ${p.id === (pid || v?.patient) ? "selected" : ""}>${escapeHtml(p.name)} · ${escapeHtml(p.id)}</option>`,
+          )
+          .join("")}</select></div><div class="field full" id="visitidentity"></div><div class="field"><label>Clinic *</label><select class="select" name="clinic" required>${activeClinics.map((c) => `<option value="${attr(c.name)}" ${c.name === currentClinic ? "selected" : ""}>${escapeHtml(c.name)}${c.name === me.preferredClinic ? " ★" : ""}</option>`).join("")}</select><small class="tiny muted">★ Preferred clinic (default)</small></div><div class="field"><label>Date *</label><input class="input" type="date" name="date" value="${v?.date || TODAY}" required></div><div class="field"><label>Time <span class="muted">(optional)</span></label><input class="input" type="time" name="time" value="${v && v.timeMode !== "generated" ? v.time : ""}"><small class="tiny muted">If blank, the system generates an ordering time after the last recorded Visit on that date.</small></div><div class="field"><label>Visit type *</label><select class="select" name="type" required>${VISIT_TYPES.map((x) => `<option ${v?.type === x ? "selected" : ""}>${x}</option>`).join("")}</select></div><div class="field"><label>Status *</label><select class="select" name="status" required>${VISIT_STATUSES.map((x) => `<option ${(v?.status || "Scheduled") === x ? "selected" : ""}>${x}</option>`).join("")}</select></div></div><div class="callout">A patient cannot have more than one active Visit with this Doctor on the same date, regardless of clinic. Cancelled and No Show Visits do not block a new Visit.</div><div class="modalfoot"><button type="button" class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn">${v ? "Save visit" : "Create visit"}</button></div></form>`;
+      }
+      function syncVisitForm() {
+        const sel = document.querySelector('#modalbody [name="patient"]'),
+          box = document.getElementById("visitidentity");
+        if (!sel || !box) return;
+        const p = patient(sel.value);
+        box.innerHTML = p
+          ? `<div class="identitystrip"><div class="miniavatar">${escapeHtml(p.initials)}</div><div class="patient-info-grid idgrid">${infoCell("Patient ID", p.id)}${infoCell("Phone", p.phone)}${infoCell("Gender", p.gender)}${infoCell("Age", p.age)}</div></div><small class="tiny muted">Read-only. Open the patient profile to edit these details.</small>`
+          : "";
+      }
+      function visitDetailModal(v, p) {
+        const final = ["Cancelled", "No Show"].includes(v.status);
+        return `<div class="grid" style="gap:14px"><div class="grid" style="grid-template-columns:repeat(2,1fr)">${infoCell("Patient", p.name + " · " + p.id)}${infoCell("Date / time", dateFmt(v.date) + " · " + timeFmt(v.time) + (v.timeMode === "generated" ? " · system ordering time" : ""))}${infoCell("Clinic", v.clinic)}${infoCell("Visit type", v.type)}${infoCell("Queue position", v.queuePosition || "—")}${infoCell("Created by", v.createdBy || "—")}</div><div class="card" style="box-shadow:none;padding:14px"><div class="sectionhead"><div><h2>Status</h2><div class="tiny muted">Status changes are recorded in the audit log.</div></div>${pill(v.status)}</div><div class="statusbtns">${VISIT_STATUSES.map((s) => `<button class="btn ${v.status === s ? "" : "secondary"} small" ${v.status === s ? "disabled" : ""} onclick="setStatus('${v.id}','${s}')">${s}</button>`).join("")}</div></div>${lockedCard()}<div class="modalfoot"><button class="btn secondary" onclick="closeModal();openPatient('${p.id}')">Open patient record</button>${final ? "" : `<button class="btn secondary" onclick="setStatus('${v.id}','Cancelled')">Cancel visit</button>`}<button class="btn" onclick="closeModal();openModal('editvisit','${v.id}')">Edit visit</button></div></div>`;
+      }
+      function duplicatePhoneModal(existingId) {
+        const p = patient(existingId);
+        return `<div class="callout danger"><b>Phone number already exists.</b><br>${escapeHtml(p.name)} · ${escapeHtml(p.id)} · ${escapeHtml(p.phone)}</div><div class="callout">Nurses cannot create a duplicate-phone exception. If this is a different person, ask the Doctor to register them.</div><div class="modalfoot"><button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn secondary" onclick="closeModal();openModal('visit',null,'${p.id}')">＋ Create visit</button><button class="btn" onclick="closeModal();openPatient('${p.id}')">Use existing patient</button></div>`;
+      }
+
+      /* ---------------- Actions ---------------- */
+      function fd(e) {
+        return Object.fromEntries(new FormData(e.target).entries());
+      }
+      function savePatient(e, id = null) {
+        e.preventDefault();
+        const f = fd(e);
+        const phone = f.phone.trim();
+        const same = patients.filter(
+          (p) => normPhone(p.phone) === normPhone(phone) && p.id !== id,
+        );
+        const existing = same.find((p) => !p.deleted);
+        if (existing) {
+          if (id) {
+            toast("This phone number is already used by another active patient. Patient phone was not changed.");
+            return false;
+          }
+          closeModal();
+          openModal("duplicatePhone", existing.id);
+          return false;
+        }
+        if (same.some((p) => p.deleted)) {
+          closeModal();
+          openModal("removedPhone");
+          return false;
+        }
+        let age = f.age ? Number(f.age) : null;
+        let dob = f.dob || "";
+        let dobEstimated = false;
+        if (!age && dob) age = calcAge(dob);
+        if (age !== null && !dob) {
+          dob = String(new Date(TODAY).getFullYear() - Number(age)) + "-01-01";
+          dobEstimated = true;
+        }
+        const data = {
+          name: f.name.trim(),
+          phone,
+          gender: f.gender,
+          age,
+          dob,
+          dobEstimated,
+          email: f.email,
+          address: f.address,
+          emergency: f.emergency,
+          initials: initials(f.name),
+        };
+        if (id) {
+          Object.assign(patient(id), data);
+          audit("PATIENT_UPDATE", id, { by: "nurse" });
+          closeModal();
+          render();
+          toast("Patient information updated.");
+        } else {
+          if (countedPatients().length >= demoEntitlements.patients) {
+            closeModal();
+            toast("Patient capacity reached. Contact administration.");
+            return false;
+          }
+          const newId =
+            "PAT-" +
+            String(
+              Math.max(...patients.map((p) => Number(p.id.slice(4)))) + 1,
+            ).padStart(6, "0");
+          patients.push({ id: newId, ...data, deleted: false });
+          audit("PATIENT_CREATE", newId, { phone });
+          closeModal();
+          openPatient(newId);
+          toast("Patient created. Patient capacity was checked automatically.");
+        }
+        return false;
+      }
+      function saveVisit(e, id = null) {
+        e.preventDefault();
+        const f = fd(e);
+        const clinic = clinics.find((c) => c.name === f.clinic);
+        if (!clinic || clinic.status !== "Active") {
+          toast("This clinic is inactive and cannot receive new Visits.");
+          return false;
+        }
+        const p = patient(f.patient);
+        if (!p || p.deleted) {
+          toast("Select an active patient.");
+          return false;
+        }
+        const duplicate =
+          ACTIVE_VISIT_STATUSES.includes(f.status) &&
+          visits.find(
+            (v) =>
+              v.id !== id &&
+              v.patient === f.patient &&
+              v.date === f.date &&
+              ACTIVE_VISIT_STATUSES.includes(v.status),
+          );
+        if (duplicate) {
+          toast("Blocked: this patient already has an active Visit with this Doctor on the selected date, regardless of clinic.");
+          return false;
+        }
+        let time = f.time || "";
+        let timeMode = "manual";
+        if (!time) {
+          time = generateOrderingTime(f.date);
+          timeMode = "generated";
+        }
+        if (id) {
+          const v = visitById(id);
+          const old = { ...v };
+          const moved = v.clinic !== f.clinic || v.date !== f.date;
+          Object.assign(v, {
+            patient: f.patient,
+            clinic: f.clinic,
+            date: f.date,
+            time,
+            timeMode,
+            type: f.type,
+            status: f.status,
+          });
+          if (moved) v.queuePosition = nextQueuePosition(v.clinic, v.date, v.id);
+          audit("VISIT_UPDATE", v.id, { old, new: { ...v } });
+          closeModal();
+          render();
+          toast("Visit updated. Business rules were revalidated.");
+        } else {
+          const idn =
+            "V-" + (Math.max(...visits.map((v) => Number(v.id.slice(2)))) + 1);
+          visits.push({
+            id: idn,
+            patient: f.patient,
+            clinic: f.clinic,
+            date: f.date,
+            time,
+            timeMode,
+            type: f.type,
+            status: f.status,
+            queuePosition: nextQueuePosition(f.clinic, f.date),
+            createdBy: me.name,
+          });
+          audit("VISIT_CREATE", idn, { patient: f.patient, clinic: f.clinic, date: f.date });
+          closeModal();
+          queueClinic = f.clinic;
+          queueDate = f.date;
+          go("queue");
+          toast("Visit created and added to the clinic queue.");
+        }
+        return false;
+      }
+      function saveProfile(e) {
+        e.preventDefault();
+        const f = fd(e);
+        Object.assign(me, { name: f.name.trim(), phone: f.phone, email: f.email });
+        audit("NURSE_PROFILE_UPDATE", me.id, {});
+        closeModal();
+        render();
+        toast("Profile updated.");
+        return false;
+      }
+      function generateOrderingTime(date) {
+        const same = visits
+          .filter((v) => v.date === date)
+          .map((v) => v.time)
+          .filter(Boolean)
+          .sort();
+        let last = same.length ? same[same.length - 1] : "08:55";
+        let [h, m] = last.split(":").map(Number);
+        m += 5;
+        h += Math.floor(m / 60);
+        m %= 60;
+        if (h > 23) {
+          h = 23;
+          m = 59;
+        }
+        return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0");
+      }
+      function nextQueuePosition(clinic, date, exceptId = null) {
+        const arr = visits.filter(
+          (v) => v.clinic === clinic && v.date === date && v.id !== exceptId,
+        );
+        return arr.length
+          ? Math.max(...arr.map((v) => v.queuePosition || 0)) + 1
+          : 1;
+      }
+      function ageFromDob(form) {
+        if (form.dob.value) form.age.value = calcAge(form.dob.value);
+      }
+      function calcAge(dob) {
+        const d = new Date(dob + "T12:00:00"),
+          n = new Date(TODAY + "T12:00:00");
+        let a = n.getFullYear() - d.getFullYear();
+        if (
+          n.getMonth() < d.getMonth() ||
+          (n.getMonth() === d.getMonth() && n.getDate() < d.getDate())
+        )
+          a--;
+        return Math.max(0, a);
+      }
+      function initials(n) {
+        return String(n || "")
+          .trim()
+          .split(/\s+/)
+          .slice(0, 2)
+          .map((x) => x[0] || "")
+          .join("")
+          .toUpperCase();
+      }
+      function audit(action, entity, details) {
+        auditLog.unshift({ at: new Date().toISOString(), actor: me.name, role: "Nurse", action, entity, details });
+      }
+      function closeModal() {
+        document.getElementById("modalback").classList.remove("show");
+      }
+      function escapeHtml(s = "") {
+        return String(s).replace(
+          /[&<>"']/g,
+          (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c],
+        );
+      }
+      function attr(s = "") {
+        return escapeHtml(s);
+      }
+      function toast(s) {
+        const t = document.getElementById("toast");
+        t.textContent = s;
+        t.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove("show"), 3000);
+      }
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeModal();
+      });
+      render();
+      
+    </script>
+    <script>
+      /* =====================================================================
+         Localization layer (EN / AR + RTL)
+         Display-only: it translates rendered text, placeholders, toasts,
+         confirm dialogs and the printed prescription. Business data, option
+         values, statuses and all rule checks stay in English internally, so
+         no business logic above is changed.
+         ===================================================================== */
+      let AR = {}; // loaded from i18n/portal.ar.json + i18n/nurse.ar.json
+      const AR_PATTERNS = [
+        [/^(\d+) visits?$/, (m) => `${m[1]} زيارة`],
+        [/^(\d+) Visit\(s\)$/, (m) => `${m[1]} زيارة`],
+        [/^(\d+) active records$/, (m) => `${m[1]} سجل نشط`],
+        [/^(\d+) deleted records$/, (m) => `${m[1]} سجل محذوف`],
+        [/^(.+) \*$/, (m) => (AR[m[1]] ? `${AR[m[1]]} *` : null)],
+        [/^(.*) \(inactive\)$/, (m) => `${m[1]} (غير نشطة)`],
+        [/^Patient: (.*)$/, (m) => `المريض: ${trCore(m[1]) ?? m[1]}`],
+        [/^Date: (.*)$/, (m) => `التاريخ: ${m[1]}`],
+        [/^Prescription (\S+)$/, (m) => `الوصفة الطبية ${m[1]}`],
+        [
+          /^Patient relationship removed\. (\d+) future Visit\(s\) cancelled; history preserved\.$/,
+          (m) => `تمت إزالة علاقة المريض. تم إلغاء ${m[1]} زيارة مستقبلية؛ والسجل محفوظ.`,
+        ],
+        [
+          /^Choose a previous prescription or copy an individual medication into (.+)\. The copy becomes independent\.$/,
+          (m) => `اختر وصفة سابقة أو انسخ دواءً منفردًا إلى ${m[1]}. تصبح النسخة مستقلة.`,
+        ],
+      ];
+      const AR_MONTHS = {
+        Jan: "يناير", Feb: "فبراير", Mar: "مارس", Apr: "أبريل", May: "مايو", Jun: "يونيو",
+        Jul: "يوليو", Aug: "أغسطس", Sep: "سبتمبر", Sept: "سبتمبر", Oct: "أكتوبر",
+        Nov: "نوفمبر", Dec: "ديسمبر",
+      };
+
+      let LANG = "en";
+      try {
+        LANG = localStorage.getItem("clinicflow.lang") === "ar" ? "ar" : "en";
+      } catch (e) {}
+
+      function trCore(s) {
+        if (!s) return null;
+        if (Object.prototype.hasOwnProperty.call(AR, s)) return AR[s];
+        for (const [re, fn] of AR_PATTERNS) {
+          const m = s.match(re);
+          if (m) {
+            const out = fn(m);
+            if (out != null) return out;
+          }
+        }
+        if (s.startsWith("· ")) {
+          const rest = trCore(s.slice(2));
+          return rest == null ? null : "· " + rest;
+        }
+        if (s.includes(" · ")) {
+          let changed = false;
+          const out = s.split(" · ").map((part) => {
+            const t = trCore(part);
+            if (t != null) changed = true;
+            return t ?? part;
+          });
+          return changed ? out.join(" · ") : null;
+        }
+        return null;
+      }
+      function arPost(s) {
+        return s
+          .replace(
+            /\b(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sept|Sep|Oct|Nov|Dec) (\d{4})\b/g,
+            (_, d, mo, y) => `${d} ${AR_MONTHS[mo]} ${y}`,
+          )
+          .replace(/(\d{1,2}:\d{2})[\s ](AM|PM)/g, (_, t, ap) => `${t} ${ap === "AM" ? "ص" : "م"}`)
+          // keep phone-like digit groups in reading order inside RTL text
+          .replace(/(?<![\d⁦])(\+?\d+(?: \d+)+)(?![\d⁩])/g, "⁦$1⁩");
+      }
+      function tr(src) {
+        if (LANG !== "ar" || src == null) return src;
+        const m = String(src).match(/^(\s*)([\s\S]*?)(\s*)$/);
+        const core = m[2].replace(/\s+/g, " ");
+        if (!core) return src;
+        const out = trCore(core);
+        const result = arPost(out ?? core);
+        return result === core ? src : m[1] + result + m[3];
+      }
+
+      const textState = new WeakMap(); // text node -> { src, out }
+      const SKIP_TAGS = new Set(["SCRIPT", "STYLE", "TEXTAREA", "NOSCRIPT"]);
+      function localizeText(node) {
+        const parent = node.parentNode;
+        if (!parent || SKIP_TAGS.has(parent.nodeName)) return;
+        if (parent.closest && parent.closest("[data-i18n-skip]")) return;
+        let st = textState.get(node);
+        if (!st || node.nodeValue !== st.out) st = { src: node.nodeValue };
+        // freeze <option> value so translating its label never changes the submitted value
+        if (parent.nodeName === "OPTION" && !parent.hasAttribute("value"))
+          parent.setAttribute("value", parent.textContent.trim());
+        st.out = tr(st.src);
+        textState.set(node, st);
+        if (node.nodeValue !== st.out) node.nodeValue = st.out;
+      }
+      function localizeAttrs(el) {
+        if (!el.hasAttribute || !el.hasAttribute("placeholder")) return;
+        if (!el.hasAttribute("data-i18n-ph"))
+          el.setAttribute("data-i18n-ph", el.getAttribute("placeholder"));
+        el.setAttribute("placeholder", tr(el.getAttribute("data-i18n-ph")));
+      }
+      function localizeTree(root) {
+        if (!root) return;
+        if (root.nodeType === 3) return localizeText(root);
+        if (root.nodeType !== 1 && root.nodeType !== 9) return;
+        if (root.nodeType === 1) localizeAttrs(root);
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
+        let n;
+        while ((n = walker.nextNode())) n.nodeType === 3 ? localizeText(n) : localizeAttrs(n);
+      }
+
+      let titleSrc = document.title;
+      function applyLang() {
+        const html = document.documentElement;
+        html.lang = LANG;
+        html.dir = LANG === "ar" ? "rtl" : "ltr";
+        document.title = LANG === "ar" ? tr(titleSrc) : titleSrc;
+        document.querySelectorAll(".langswitch button").forEach((b) => {
+          b.classList.toggle("active", b.dataset.lang === LANG);
+          b.setAttribute("aria-pressed", b.dataset.lang === LANG);
+        });
+        localizeTree(document.body);
+      }
+      function setLang(l) {
+        LANG = l === "ar" ? "ar" : "en";
+        try {
+          localStorage.setItem("clinicflow.lang", LANG);
+        } catch (e) {}
+        applyLang();
+      }
+
+      // Re-localize anything the app renders (views, modals, toasts).
+      new MutationObserver((records) => {
+        for (const r of records) {
+          if (r.type === "characterData") localizeText(r.target);
+          else r.addedNodes.forEach(localizeTree);
+        }
+      }).observe(document.body, { childList: true, subtree: true, characterData: true });
+
+      // Native confirm dialogs.
+      const _confirm = window.confirm.bind(window);
+      window.confirm = (msg) => _confirm(tr(msg));
+
+      // Printed prescription window.
+      const _open = window.open.bind(window);
+      window.open = function (...args) {
+        const w = _open(...args);
+        if (w && LANG === "ar") {
+          const d = w.document,
+            write = d.write.bind(d);
+          d.write = (h) => {
+            const doc = new DOMParser().parseFromString(h, "text/html");
+            doc.documentElement.setAttribute("dir", "rtl");
+            doc.documentElement.setAttribute("lang", "ar");
+            const walker = doc.createTreeWalker(doc.documentElement, NodeFilter.SHOW_TEXT);
+            let n;
+            while ((n = walker.nextNode()))
+              if (n.parentNode.nodeName !== "STYLE") n.nodeValue = tr(n.nodeValue);
+            const style = doc.createElement("style");
+            style.textContent = 'body{font-family:"IBM Plex Sans Arabic","Segoe UI",Tahoma,Arial,sans-serif}';
+            doc.head.appendChild(style);
+            write("<!doctype html>" + doc.documentElement.outerHTML);
+          };
+        }
+        return w;
+      };
+
+      // Arabic dictionary is loaded from JSON (i18n/portal.ar.json + i18n/nurse.ar.json).
+      Promise.all(["i18n/portal.ar.json","i18n/nurse.ar.json"].map((f) => fetch(f).then((r) => (r.ok ? r.json() : Promise.reject(new Error(f + " " + r.status))))))
+        .then((dicts) => dicts.forEach((d) => Object.assign(AR, d)))
+        .catch((err) => console.error("Could not load translations (open via a web server, not file://):", err))
+        .finally(applyLang);
+      applyLang();
+    </script>
+    <script>
+      // Embedding support (landing page preview): ?lang=ar and postMessage.
+      (function () {
+        const q = new URLSearchParams(location.search).get("lang");
+        if (q === "ar" || q === "en") setLang(q);
+        window.addEventListener("message", (e) => {
+          if (e.data && e.data.type === "eyadaty:lang") setLang(e.data.lang);
+        });
+      })();
+    </script>
+  </body>
+</html>

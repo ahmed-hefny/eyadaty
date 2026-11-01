@@ -1,0 +1,9 @@
+{
+  "whatsapp": {
+    "number": "201140590598",
+    "message": {
+      "en": "Hello Eyadaty, I'd like to subscribe.\n\nName: {name}\nPhone: {phone}\nEmail: {email}\nSpecialty: {specialty}\nPlan: {plan}\nBilling term: {term}",
+      "ar": "مرحبًا عيادتى، أرغب في الاشتراك.\n\nالاسم: {name}\nالهاتف: {phone}\nالبريد الإلكتروني: {email}\nالتخصص: {specialty}\nالباقة: {plan}\nمدة الاشتراك: {term}"
+    }
+  }
+}

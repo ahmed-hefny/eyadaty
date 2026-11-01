@@ -1,0 +1,56 @@
+{
+  "currency": { "en": "EGP", "ar": "جنيه" },
+  "defaultTerm": "y",
+  "terms": [
+    { "id": "m", "months": 1, "label": { "en": "Monthly", "ar": "شهري" }, "unit": { "en": "EGP / month", "ar": "جنيه / شهر" } },
+    { "id": "h", "months": 6, "label": { "en": "6 months", "ar": "6 أشهر" }, "unit": { "en": "EGP / 6 months", "ar": "جنيه / 6 أشهر" } },
+    { "id": "y", "months": 12, "label": { "en": "1 year", "ar": "سنة" }, "unit": { "en": "EGP / year", "ar": "جنيه / سنة" } }
+  ],
+  "text": {
+    "perMonth": { "en": "≈ {n} EGP per month", "ar": "≈ {n} جنيه شهريًا" },
+    "save": { "en": " · save {n} EGP", "ar": " · وفّر {n} جنيه" },
+    "notSure": { "en": "Not sure yet", "ar": "لم أقرر بعد" }
+  },
+  "plans": [
+    {
+      "id": "basic",
+      "featured": false,
+      "tag": { "en": "1 month free", "ar": "شهر مجاني" },
+      "tagStyle": "free",
+      "name": { "en": "Basic", "ar": "الأساسية" },
+      "description": { "en": "For a doctor with a single clinic and a small team.", "ar": "لطبيب بعيادة واحدة وفريق صغير." },
+      "prices": { "m": 5000, "h": 20000, "y": 35000 },
+      "bonus": {
+        "m": { "en": "🎁 Your first month is free", "ar": "🎁 شهرك الأول مجاني" },
+        "h": { "en": "🎁 7 months total — 1 bonus month", "ar": "🎁 7 أشهر إجمالًا — شهر إضافي مجاني" },
+        "y": { "en": "🎁 13 months total — 1 bonus month", "ar": "🎁 13 شهرًا إجمالًا — شهر إضافي مجاني" }
+      },
+      "features": [
+        { "en": "<strong>1</strong> clinic", "ar": "عيادة <strong>1</strong>" },
+        { "en": "Up to <strong>2</strong> nurses", "ar": "حتى <strong>2</strong> ممرض" },
+        { "en": "Up to <strong>300</strong> patients", "ar": "حتى <strong>300</strong> مريض" },
+        { "en": "Visits, queue, prescriptions &amp; reports", "ar": "الزيارات والدور والوصفات والتقارير" },
+        { "en": "Arabic &amp; English interface", "ar": "واجهة بالعربية والإنجليزية" }
+      ],
+      "cta": { "en": "Start with Basic", "ar": "ابدأ بالأساسية" }
+    },
+    {
+      "id": "pro",
+      "featured": true,
+      "tag": { "en": "Most popular", "ar": "الأكثر طلبًا" },
+      "tagStyle": "",
+      "name": { "en": "Professional", "ar": "الاحترافية" },
+      "description": { "en": "For busy practices running two clinics with a full team.", "ar": "للعيادات المزدحمة التي تدير عيادتين بفريق كامل." },
+      "prices": { "m": 10000, "h": 40000, "y": 70000 },
+      "bonus": null,
+      "features": [
+        { "en": "<strong>2</strong> clinics", "ar": "<strong>2</strong> عيادة" },
+        { "en": "Up to <strong>5</strong> nurses", "ar": "حتى <strong>5</strong> ممرضين" },
+        { "en": "Up to <strong>600</strong> patients", "ar": "حتى <strong>600</strong> مريض" },
+        { "en": "Visits, queue, prescriptions &amp; reports", "ar": "الزيارات والدور والوصفات والتقارير" },
+        { "en": "Arabic &amp; English interface", "ar": "واجهة بالعربية والإنجليزية" }
+      ],
+      "cta": { "en": "Choose Professional", "ar": "اختر الاحترافية" }
+    }
+  ]
+}
