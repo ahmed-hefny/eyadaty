@@ -1,56 +1,240 @@
 {
-  "currency": { "en": "EGP", "ar": "جنيه" },
+  "currency": {
+    "en": "EGP",
+    "ar": "جنيه"
+  },
   "defaultTerm": "y",
   "terms": [
-    { "id": "m", "months": 1, "label": { "en": "Monthly", "ar": "شهري" }, "unit": { "en": "EGP / month", "ar": "جنيه / شهر" } },
-    { "id": "h", "months": 6, "label": { "en": "6 months", "ar": "6 أشهر" }, "unit": { "en": "EGP / 6 months", "ar": "جنيه / 6 أشهر" } },
-    { "id": "y", "months": 12, "label": { "en": "1 year", "ar": "سنة" }, "unit": { "en": "EGP / year", "ar": "جنيه / سنة" } }
+    {
+      "id": "m",
+      "months": 1,
+      "label": {
+        "en": "Monthly",
+        "ar": "شهري"
+      },
+      "unit": {
+        "en": "EGP / month",
+        "ar": "جنيه / شهر"
+      }
+    },
+    {
+      "id": "h",
+      "months": 6,
+      "label": {
+        "en": "6 months",
+        "ar": "6 شهور"
+      },
+      "unit": {
+        "en": "EGP / 6 months",
+        "ar": "جنيه / 6 شهور"
+      }
+    },
+    {
+      "id": "y",
+      "months": 12,
+      "label": {
+        "en": "1 year",
+        "ar": "سنة"
+      },
+      "unit": {
+        "en": "EGP / year",
+        "ar": "جنيه / سنة"
+      }
+    }
   ],
   "text": {
-    "perMonth": { "en": "≈ {n} EGP per month", "ar": "≈ {n} جنيه شهريًا" },
-    "save": { "en": " · save {n} EGP", "ar": " · وفّر {n} جنيه" },
-    "notSure": { "en": "Not sure yet", "ar": "لم أقرر بعد" }
+    "perMonth": {
+      "en": "≈ {n} EGP per month",
+      "ar": "≈ {n} جنيه في الشهر"
+    },
+    "save": {
+      "en": " · save {n} EGP",
+      "ar": " · وفّر {n} جنيه"
+    },
+    "notSure": {
+      "en": "Not sure yet",
+      "ar": "لسه محددتش"
+    }
   },
   "plans": [
     {
+      "id": "trial",
+      "featured": false,
+      "tag": {
+        "en": "No payment needed",
+        "ar": "من غير أي دفع"
+      },
+      "tagStyle": "free",
+      "name": {
+        "en": "Free trial",
+        "ar": "التجربة المجانية"
+      },
+      "description": {
+        "en": "Try Eyadaty in your clinic for 14 days, completely free.",
+        "ar": "جرّب عيادتى في عيادتك 14 يوم ببلاش بالكامل."
+      },
+      "fixed": {
+        "price": 0,
+        "label": {
+          "en": "Free",
+          "ar": "ببلاش"
+        },
+        "unit": {
+          "en": "for 14 days",
+          "ar": "لمدة 14 يوم"
+        }
+      },
+      "bonus": null,
+      "features": [
+        {
+          "en": "<strong>1</strong> clinic",
+          "ar": "عيادة <strong>1</strong>"
+        },
+        {
+          "en": "Up to <strong>2</strong> nurses",
+          "ar": "لحد <strong>2</strong> تمريض"
+        },
+        {
+          "en": "<strong>Unlimited</strong> patients",
+          "ar": "عدد مرضى <strong>مفتوح</strong>"
+        },
+        {
+          "en": "All features — visits, queue, prescriptions &amp; reports",
+          "ar": "كل المميزات — الزيارات والدور والروشتات والتقارير"
+        },
+        {
+          "en": "Your data stays when you subscribe",
+          "ar": "بياناتك بتفضل معاك لما تشترك"
+        }
+      ],
+      "cta": {
+        "en": "Start free trial",
+        "ar": "ابدأ التجربة ببلاش"
+      }
+    },
+    {
       "id": "basic",
       "featured": false,
-      "tag": { "en": "1 month free", "ar": "شهر مجاني" },
+      "tag": {
+        "en": "1 month free",
+        "ar": "شهر ببلاش"
+      },
       "tagStyle": "free",
-      "name": { "en": "Basic", "ar": "الأساسية" },
-      "description": { "en": "For a doctor with a single clinic and a small team.", "ar": "لطبيب بعيادة واحدة وفريق صغير." },
-      "prices": { "m": 5000, "h": 20000, "y": 35000 },
+      "name": {
+        "en": "Basic",
+        "ar": "الأساسية"
+      },
+      "description": {
+        "en": "For a doctor with a single clinic and a small team.",
+        "ar": "لدكتور عنده عيادة واحدة وفريق صغير."
+      },
+      "prices": {
+        "m": 499,
+        "h": 2745,
+        "y": 4990
+      },
       "bonus": {
-        "m": { "en": "🎁 Your first month is free", "ar": "🎁 شهرك الأول مجاني" },
-        "h": { "en": "🎁 7 months total — 1 bonus month", "ar": "🎁 7 أشهر إجمالًا — شهر إضافي مجاني" },
-        "y": { "en": "🎁 13 months total — 1 bonus month", "ar": "🎁 13 شهرًا إجمالًا — شهر إضافي مجاني" }
+        "m": {
+          "en": "🎁 Your first month is free",
+          "ar": "🎁 أول شهر ببلاش"
+        },
+        "h": {
+          "en": "🎁 7 months total — 1 bonus month",
+          "ar": "🎁 7 شهور — منهم شهر هدية"
+        },
+        "y": {
+          "en": "🎁 13 months total — 1 bonus month",
+          "ar": "🎁 13 شهر — منهم شهر هدية"
+        }
       },
       "features": [
-        { "en": "<strong>1</strong> clinic", "ar": "عيادة <strong>1</strong>" },
-        { "en": "Up to <strong>2</strong> nurses", "ar": "حتى <strong>2</strong> ممرض" },
-        { "en": "Up to <strong>300</strong> patients", "ar": "حتى <strong>300</strong> مريض" },
-        { "en": "Visits, queue, prescriptions &amp; reports", "ar": "الزيارات والدور والوصفات والتقارير" },
-        { "en": "Arabic &amp; English interface", "ar": "واجهة بالعربية والإنجليزية" }
+        {
+          "en": "<strong>1</strong> clinic",
+          "ar": "عيادة <strong>1</strong>"
+        },
+        {
+          "en": "Up to <strong>2</strong> nurses",
+          "ar": "لحد <strong>2</strong> تمريض"
+        },
+        {
+          "en": "<strong>Unlimited</strong> patients",
+          "ar": "عدد مرضى <strong>مفتوح</strong>"
+        },
+        {
+          "en": "Visits, queue, prescriptions &amp; reports",
+          "ar": "الزيارات والدور والروشتات والتقارير"
+        },
+        {
+          "en": "Arabic &amp; English interface",
+          "ar": "واجهة عربي وإنجليزي"
+        }
       ],
-      "cta": { "en": "Start with Basic", "ar": "ابدأ بالأساسية" }
+      "cta": {
+        "en": "Start with Basic",
+        "ar": "ابدأ بالأساسية"
+      }
     },
     {
       "id": "pro",
       "featured": true,
-      "tag": { "en": "Most popular", "ar": "الأكثر طلبًا" },
+      "tag": {
+        "en": "Most popular",
+        "ar": "الأكتر طلبًا"
+      },
       "tagStyle": "",
-      "name": { "en": "Professional", "ar": "الاحترافية" },
-      "description": { "en": "For busy practices running two clinics with a full team.", "ar": "للعيادات المزدحمة التي تدير عيادتين بفريق كامل." },
-      "prices": { "m": 10000, "h": 40000, "y": 70000 },
-      "bonus": null,
+      "name": {
+        "en": "Professional",
+        "ar": "الاحترافية"
+      },
+      "description": {
+        "en": "For busy practices running two clinics with a full team.",
+        "ar": "للعيادات اللي عليها ضغط وبتدير عيادتين بفريق كامل."
+      },
+      "prices": {
+        "m": 999,
+        "h": 5495,
+        "y": 9990
+      },
+      "bonus": {
+        "m": {
+          "en": "🎁 14-day free trial",
+          "ar": "🎁 جرّبها ببلاش 14 يوم"
+        },
+        "h": {
+          "en": "🎁 14-day free trial",
+          "ar": "🎁 جرّبها ببلاش 14 يوم"
+        },
+        "y": {
+          "en": "🎁 14-day free trial",
+          "ar": "🎁 جرّبها ببلاش 14 يوم"
+        }
+      },
       "features": [
-        { "en": "<strong>2</strong> clinics", "ar": "<strong>2</strong> عيادة" },
-        { "en": "Up to <strong>5</strong> nurses", "ar": "حتى <strong>5</strong> ممرضين" },
-        { "en": "Up to <strong>600</strong> patients", "ar": "حتى <strong>600</strong> مريض" },
-        { "en": "Visits, queue, prescriptions &amp; reports", "ar": "الزيارات والدور والوصفات والتقارير" },
-        { "en": "Arabic &amp; English interface", "ar": "واجهة بالعربية والإنجليزية" }
+        {
+          "en": "<strong>2</strong> clinics",
+          "ar": "<strong>2</strong> عيادة"
+        },
+        {
+          "en": "Up to <strong>5</strong> nurses",
+          "ar": "لحد <strong>5</strong> تمريض"
+        },
+        {
+          "en": "<strong>Unlimited</strong> patients",
+          "ar": "عدد مرضى <strong>مفتوح</strong>"
+        },
+        {
+          "en": "Visits, queue, prescriptions &amp; reports",
+          "ar": "الزيارات والدور والروشتات والتقارير"
+        },
+        {
+          "en": "Arabic &amp; English interface",
+          "ar": "واجهة عربي وإنجليزي"
+        }
       ],
-      "cta": { "en": "Choose Professional", "ar": "اختر الاحترافية" }
+      "cta": {
+        "en": "Choose Professional",
+        "ar": "اختار الاحترافية"
+      }
     }
   ]
 }

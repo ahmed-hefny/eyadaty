@@ -274,12 +274,14 @@
       .step h3 { margin: 0 0 6px; font-size: 17px; }
       .step p { margin: 0; color: var(--muted); font-size: 14px; }
 
+      .field[hidden] { display: none; }
+
       /* Pricing */
       .terms { display: flex; justify-content: center; margin-bottom: 36px; }
       .terms .tabs { margin: 0; }
       .terms .save { font-size: 10px; background: var(--greenbg); color: var(--green); padding: 2px 6px; border-radius: 999px; margin-inline-start: 5px; font-weight: 800; }
       .terms .tabs button.on .save { background: var(--mint); color: var(--night); }
-      .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 920px; margin: 0 auto; }
+      .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1180px; margin: 0 auto; }
       .plan { border: 1px solid var(--line); border-radius: 24px; padding: 32px; background: #fff; position: relative; display: flex; flex-direction: column; }
       .plan.pro { background: linear-gradient(170deg, var(--night) 0%, #173f4c 100%); color: #eaf4f7; border-color: var(--night); box-shadow: var(--shadow-lg); }
       .plan .tag { position: absolute; top: -13px; inset-inline-start: 28px; background: var(--mint); color: var(--night); font-size: 12px; font-weight: 800; padding: 5px 12px; border-radius: 999px; }
@@ -492,7 +494,7 @@
           <div class="wrap">
             <div class="stat"><b>2</b><span data-i18n="st1">Roles:  doctor &amp; nurse</span></div>
             <div class="stat"><b data-i18n="st2b">2 clinics</b><span data-i18n="st2">Independent queues per clinic</span></div>
-            <div class="stat"><b>600</b><span data-i18n="st3">Patients on Professional</span></div>
+            <div class="stat"><b>∞</b><span data-i18n="st3">Unlimited patients on every plan</span></div>
             <div class="stat"><b>100%</b><span data-i18n="st4">Queue &amp; status changes audited</span></div>
           </div>
         </div>
@@ -623,7 +625,7 @@
             <div class="sec-head reveal">
               <div class="kicker" data-i18n="pr.k">Simple, transparent pricing</div>
               <h2 class="title" data-i18n="pr.t">Pick the plan that fits your practice</h2>
-              <p data-i18n="pr.p">Prices in Egyptian pounds. Pay for longer and save up to 42%.</p>
+              <p data-i18n="pr.p">Prices in Egyptian pounds. Pay for longer and get up to 2 months free.</p>
             </div>
             <!-- Built from content/plans.json -->
             <div class="terms">
@@ -673,9 +675,9 @@
                 <div class="field"><label data-i18n="fm.email">Email</label><input class="input" name="email" type="email" /></div>
                 <div class="field"><label data-i18n="fm.spec">Specialty</label><input class="input" name="specialty" /></div>
                 <div class="field"><label data-i18n="fm.plan">Plan</label>
-                  <select class="input" name="plan" id="planselect"></select>
+                  <select class="input" name="plan" id="planselect" onchange="syncTermField()"></select>
                 </div>
-                <div class="field full"><label data-i18n="fm.term">Billing term</label>
+                <div class="field full" id="termfield"><label data-i18n="fm.term">Billing term</label>
                   <select class="input" name="term" id="termselect"></select>
                 </div>
                 <button class="btn block field full" data-i18n="fm.send">Request a call</button>
@@ -738,7 +740,7 @@
         doctor: "clinicflow-doctor-demo-i18n.html",
         nurse: "clinicflow-nurse-demo-i18n.html",
       };
-      // Text and plan details are loaded from JSON (see i18n/ and content/).
+      /* Text and plan details are loaded from JSON (see i18n/ and content/). */
       let I18N = { en: {}, ar: {} };
       let PLANS = null;
       let SETTINGS = null;
@@ -747,17 +749,17 @@
       try {
         LANG = localStorage.getItem("clinicflow.lang") === "ar" ? "ar" : "en";
       } catch (e) {}
-      // ?lang=ar|en (used by the hreflang links) wins over the saved choice.
+      /* ?lang=ar|en (used by the hreflang links) wins over the saved choice. */
       const urlLang = new URLSearchParams(location.search).get("lang");
       if (urlLang === "ar" || urlLang === "en") LANG = urlLang;
 
-      // The English text in the markup is only a fallback; JSON wins when loaded.
+      /* The English text in the markup is only a fallback; JSON wins when loaded. */
       const SRC = new Map();
       document.querySelectorAll("[data-i18n],[data-i18n-html]").forEach((el) => SRC.set(el, el.innerHTML));
       function t(key) {
         return (I18N[LANG] && I18N[LANG][key]) ?? I18N.en[key];
       }
-      // Plan text in plans.json is { "en": "...", "ar": "..." }.
+      /* Plan text in plans.json is { "en": "...", "ar": "..." }. */
       function L(o) {
         return o ? (o[LANG] ?? o.en) : "";
       }
@@ -790,7 +792,7 @@
           fr.contentWindow.postMessage({ type: "eyadaty:lang", lang: LANG }, "*");
       }
 
-      // Keeps the SoftwareApplication offers and FAQPage in sync with plans.json and the FAQ text.
+      /* Keeps the SoftwareApplication offers and FAQPage in sync with plans.json and the FAQ text. */
       function renderStructuredData() {
         if (!PLANS) return;
         const strip = (s) => String(s || "").replace(/<[^>]+>/g, "");
@@ -805,7 +807,9 @@
           description: t("meta.desc"),
           publisher: { "@id": "https://eyadaty.com/#org" },
           offers: PLANS.plans.flatMap((p) =>
-            PLANS.terms.map((x) => ({
+            p.fixed
+              ? [{ "@type": "Offer", name: `${L(p.name)} — ${L(p.fixed.unit)}`, price: p.fixed.price, priceCurrency: "EGP", url: "https://eyadaty.com/#pricing" }]
+              : PLANS.terms.map((x) => ({
               "@type": "Offer",
               name: `${L(p.name)} — ${L(x.label)}`,
               price: p.prices[x.id],
@@ -833,13 +837,13 @@
         TERM = term;
         renderPlans();
       }
-      // Builds the term tabs, plan cards and the form's plan/term options.
+      /* Builds the term tabs, plan cards and the form's plan/term options. */
       function renderPlans() {
         if (!PLANS) return;
         const term = PLANS.terms.find((x) => x.id === TERM) || PLANS.terms[0];
         const monthly = PLANS.terms.find((x) => x.months === 1);
         const savePct = (x) =>
-          Math.max(0, ...PLANS.plans.map((p) => Math.round((1 - p.prices[x.id] / (p.prices[monthly.id] * x.months)) * 100)));
+          Math.max(0, ...PLANS.plans.filter((p) => !p.fixed).map((p) => Math.round((1 - p.prices[x.id] / (p.prices[monthly.id] * x.months)) * 100)));
         document.getElementById("terms").innerHTML = PLANS.terms
           .map((x) => {
             const pct = x.months > 1 ? savePct(x) : 0;
@@ -848,11 +852,13 @@
           .join("");
         document.getElementById("plans").innerHTML = PLANS.plans
           .map((p) => {
-            const price = p.prices[term.id];
-            const saved = p.prices[monthly.id] * term.months - price;
-            const permo = term.months > 1 ? L(PLANS.text.perMonth).replace("{n}", fmt(price / term.months)) + L(PLANS.text.save).replace("{n}", fmt(saved)) : "";
+            /* Fixed-price plans (the free trial) ignore the billing term. */
+            const price = p.fixed ? p.fixed.price : p.prices[term.id];
+            const saved = p.fixed ? 0 : p.prices[monthly.id] * term.months - price;
+            const priceHtml = p.fixed ? `<b>${L(p.fixed.label)}</b><span>${L(p.fixed.unit)}</span>` : `<b>${fmt(price)}</b><span>${L(term.unit)}</span>`;
+            const permo = term.months > 1 && !p.fixed ? L(PLANS.text.perMonth).replace("{n}", fmt(price / term.months)) + L(PLANS.text.save).replace("{n}", fmt(saved)) : "";
             const bonus = p.bonus && p.bonus[term.id] ? `<div class="bonus">${L(p.bonus[term.id])}</div>` : "";
-            return `<div class="plan reveal in ${p.featured ? "pro" : ""}">${p.tag ? `<span class="tag ${p.tagStyle || ""}">${L(p.tag)}</span>` : ""}<h3>${L(p.name)}</h3><p class="pdesc">${L(p.description)}</p><div class="price"><b>${fmt(price)}</b><span>${L(term.unit)}</span></div><p class="permo">${permo}</p>${bonus}<ul>${p.features.map((f) => `<li><i>✓</i><span>${L(f)}</span></li>`).join("")}</ul><a class="btn ${p.featured ? "mint" : "ghost"} block" href="#contact" onclick="pickPlan('${p.id}')">${L(p.cta)}</a></div>`;
+            return `<div class="plan reveal in ${p.featured ? "pro" : ""}">${p.tag ? `<span class="tag ${p.tagStyle || ""}">${L(p.tag)}</span>` : ""}<h3>${L(p.name)}</h3><p class="pdesc">${L(p.description)}</p><div class="price">${priceHtml}</div><p class="permo">${permo}</p>${bonus}<ul>${p.features.map((f) => `<li><i>✓</i><span>${L(f)}</span></li>`).join("")}</ul><a class="btn ${p.featured ? "mint" : "ghost"} block" href="#contact" onclick="pickPlan('${p.id}')">${L(p.cta)}</a></div>`;
           })
           .join("");
         const planSel = document.getElementById("planselect"),
@@ -864,12 +870,21 @@
         planSel.value = keepPlan;
         termSel.innerHTML = PLANS.terms.map((x) => `<option value="${x.id}">${L(x.label)}</option>`).join("");
         termSel.value = term.id;
+        syncTermField();
+      }
+      /* The billing term only applies to paid plans; hide it for the free trial and "Not sure yet". */
+      function syncTermField() {
+        const plan = PLANS && PLANS.plans.find((p) => p.id === document.getElementById("planselect").value);
+        const show = !!plan && !plan.fixed;
+        document.getElementById("termfield").hidden = !show;
+        document.getElementById("termselect").disabled = !show;
       }
       function pickPlan(p) {
         document.getElementById("planselect").value = p;
         document.getElementById("termselect").value = TERM;
+        syncTermField();
       }
-      // Sends the request as a pre-filled WhatsApp message to the number in content/settings.json.
+      /* Sends the request as a pre-filled WhatsApp message to the number in content/settings.json. */
       function submitLead(e) {
         e.preventDefault();
         const wa = SETTINGS && SETTINGS.whatsapp;
@@ -886,12 +901,14 @@
           email: f.email || "—",
           specialty: f.specialty || "—",
           plan: plan ? L(plan.name) : L(PLANS && PLANS.text.notSure),
-          term: term ? L(term.label) : "—",
+          term: term ? L(term.label) : "",
         };
-        const text = L(wa.message).replace(/\{(\w+)\}/g, (_, k) => values[k] ?? "");
+        /* Drop the billing-term line when no term applies. */
+        const tpl = term ? L(wa.message) : L(wa.message).replace(/\n[^\n]*\{term\}[^\n]*/, "");
+        const text = tpl.replace(/\{(\w+)\}/g, (_, k) => values[k] ?? "");
         const url = `https://wa.me/${String(wa.number).replace(/\D/g, "")}?text=${encodeURIComponent(text)}`;
         window.open(url, "_blank", "noopener");
-        // Keep a link in case the browser blocked the new tab.
+        /* Keep a link in case the browser blocked the new tab. */
         e.target.innerHTML = `<div class="thanks"><div class="big">✓</div><h3>${t("thanksT")}</h3><p class="formnote">${t("thanksP")}</p><a class="btn wa" href="${url}" target="_blank" rel="noopener">${t("waOpen")}</a></div>`;
         return false;
       }
@@ -935,7 +952,7 @@
       }
       window.addEventListener("hashchange", route);
 
-      // Sticky nav border + scroll reveal
+      /* Sticky nav border + scroll reveal */
       const nav = document.getElementById("nav");
       window.addEventListener("scroll", () => nav.classList.toggle("scrolled", scrollY > 8), { passive: true });
       const io = new IntersectionObserver(

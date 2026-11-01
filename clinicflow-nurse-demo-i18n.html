@@ -1663,8 +1663,8 @@
       ];
       const VISIT_TYPES = ["New Visit", "Follow-up"];
       const demoEntitlements = { patients: 600 };
-      // The nurse API never returns medical fields: visits below carry
-      // operational data only (no complaint, diagnosis, notes or prescription).
+      /* The nurse API never returns medical fields: visits below carry */
+      /* operational data only (no complaint, diagnosis, notes or prescription). */
       let me = {
         id: "N-001",
         name: "Nour Ahmed",
@@ -1742,8 +1742,8 @@
           deleted: false,
         },
         {
-          // Relationship removed by the Doctor: the nurse only ever learns
-          // that a previous record exists for this phone.
+          /* Relationship removed by the Doctor: the nurse only ever learns */
+          /* that a previous record exists for this phone. */
           id: "PAT-000122",
           name: "",
           phone: "0101 999 0000",
@@ -2483,7 +2483,7 @@
          values, statuses and all rule checks stay in English internally, so
          no business logic above is changed.
          ===================================================================== */
-      let AR = {}; // loaded from i18n/portal.ar.json + i18n/nurse.ar.json
+      let AR = {}; /* loaded from i18n/portal.ar.json + i18n/nurse.ar.json */
       const AR_PATTERNS = [
         [/^(\d+) visits?$/, (m) => `${m[1]} زيارة`],
         [/^(\d+) Visit\(s\)$/, (m) => `${m[1]} زيارة`],
@@ -2546,7 +2546,7 @@
             (_, d, mo, y) => `${d} ${AR_MONTHS[mo]} ${y}`,
           )
           .replace(/(\d{1,2}:\d{2})[\s ](AM|PM)/g, (_, t, ap) => `${t} ${ap === "AM" ? "ص" : "م"}`)
-          // keep phone-like digit groups in reading order inside RTL text
+          /* keep phone-like digit groups in reading order inside RTL text */
           .replace(/(?<![\d⁦])(\+?\d+(?: \d+)+)(?![\d⁩])/g, "⁦$1⁩");
       }
       function tr(src) {
@@ -2559,7 +2559,7 @@
         return result === core ? src : m[1] + result + m[3];
       }
 
-      const textState = new WeakMap(); // text node -> { src, out }
+      const textState = new WeakMap(); /* text node -> { src, out } */
       const SKIP_TAGS = new Set(["SCRIPT", "STYLE", "TEXTAREA", "NOSCRIPT"]);
       function localizeText(node) {
         const parent = node.parentNode;
@@ -2567,7 +2567,7 @@
         if (parent.closest && parent.closest("[data-i18n-skip]")) return;
         let st = textState.get(node);
         if (!st || node.nodeValue !== st.out) st = { src: node.nodeValue };
-        // freeze <option> value so translating its label never changes the submitted value
+        /* freeze <option> value so translating its label never changes the submitted value */
         if (parent.nodeName === "OPTION" && !parent.hasAttribute("value"))
           parent.setAttribute("value", parent.textContent.trim());
         st.out = tr(st.src);
@@ -2610,7 +2610,7 @@
         applyLang();
       }
 
-      // Re-localize anything the app renders (views, modals, toasts).
+      /* Re-localize anything the app renders (views, modals, toasts). */
       new MutationObserver((records) => {
         for (const r of records) {
           if (r.type === "characterData") localizeText(r.target);
@@ -2618,11 +2618,11 @@
         }
       }).observe(document.body, { childList: true, subtree: true, characterData: true });
 
-      // Native confirm dialogs.
+      /* Native confirm dialogs. */
       const _confirm = window.confirm.bind(window);
       window.confirm = (msg) => _confirm(tr(msg));
 
-      // Printed prescription window.
+      /* Printed prescription window. */
       const _open = window.open.bind(window);
       window.open = function (...args) {
         const w = _open(...args);
@@ -2646,7 +2646,7 @@
         return w;
       };
 
-      // Arabic dictionary is loaded from JSON (i18n/portal.ar.json + i18n/nurse.ar.json).
+      /* Arabic dictionary is loaded from JSON (i18n/portal.ar.json + i18n/nurse.ar.json). */
       Promise.all(["i18n/portal.ar.json","i18n/nurse.ar.json"].map((f) => fetch(f).then((r) => (r.ok ? r.json() : Promise.reject(new Error(f + " " + r.status))))))
         .then((dicts) => dicts.forEach((d) => Object.assign(AR, d)))
         .catch((err) => console.error("Could not load translations (open via a web server, not file://):", err))
@@ -2654,7 +2654,7 @@
       applyLang();
     </script>
     <script>
-      // Embedding support (landing page preview): ?lang=ar and postMessage.
+      /* Embedding support (landing page preview): ?lang=ar and postMessage. */
       (function () {
         const q = new URLSearchParams(location.search).get("lang");
         if (q === "ar" || q === "en") setLang(q);
