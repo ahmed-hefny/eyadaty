@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102f3d"/>
+      <stop offset="1" stop-color="#164552"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.85" cy="0.1" r="0.6">
+      <stop offset="0" stop-color="#71d5bf" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#71d5bf" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b7a75"/>
+      <stop offset="1" stop-color="#0c2631"/>
+    </linearGradient>
+    <linearGradient id="cross" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a8f2df"/>
+      <stop offset="1" stop-color="#71d5bf"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g transform="translate(90 90) scale(0.3125)">
+    <rect width="512" height="512" rx="116" fill="url(#tile)" stroke="#2d6672" stroke-width="6"/>
+    <path fill="url(#cross)" d="M214 96h84a22 22 0 0 1 22 22v76h76a22 22 0 0 1 22 22v84a22 22 0 0 1-22 22h-76v76a22 22 0 0 1-22 22h-84a22 22 0 0 1-22-22v-76h-76a22 22 0 0 1-22-22v-84a22 22 0 0 1 22-22h76v-76a22 22 0 0 1 22-22z"/>
+    <circle cx="256" cy="238" r="30" fill="#102f3d"/>
+    <path d="M240 252h32l12 60h-56z" fill="#102f3d"/>
+  </g>
+  <text x="270" y="172" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="56" font-weight="800" fill="#ffffff">Eyadaty</text>
+  <text x="90" y="350" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="74" font-weight="800" fill="#ffffff" letter-spacing="-2">Run your clinic.</text>
+  <text x="90" y="438" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="74" font-weight="800" fill="#71d5bf" letter-spacing="-2">Keep medicine private.</text>
+  <text x="90" y="520" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="30" fill="#9db7c0">Patients · Visits · Live queues · Prescriptions · Arabic &amp; English</text>
+</svg>

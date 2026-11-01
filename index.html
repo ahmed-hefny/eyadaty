@@ -3,12 +3,71 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Eyadaty — The private workspace for modern clinics</title>
+    <title>Eyadaty — Clinic Management Software for Private Doctors in Egypt</title>
     <meta
       name="description"
-      content="Eyadaty is a clinic management SaaS for private doctors: patients, visits, live queues, prescriptions and nurse workflows — with medical data kept doctor-only."
+      content="Eyadaty is clinic management software for private doctors in Egypt: patient records, visits, live clinic queues, prescriptions and nurse workflows — in Arabic and English, with medical data kept doctor-only."
     />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <!-- Production URL: update SITE_URL here, in sitemap.xml and robots.txt if the domain changes. -->
+    <link rel="canonical" href="https://eyadaty.com/" />
+    <link rel="alternate" hreflang="en" href="https://eyadaty.com/?lang=en" />
+    <link rel="alternate" hreflang="ar" href="https://eyadaty.com/?lang=ar" />
+    <link rel="alternate" hreflang="x-default" href="https://eyadaty.com/" />
+
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#102f3d" />
+
+    <!-- Social sharing (Facebook, WhatsApp, LinkedIn, X) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Eyadaty" />
+    <meta property="og:title" content="Eyadaty — Run your clinic. Keep medicine private." />
+    <meta property="og:description" content="Patients, visits, live queues and prescriptions for private clinics — in Arabic and English. First month free on Basic." />
+    <meta property="og:url" content="https://eyadaty.com/" />
+    <meta property="og:image" content="https://eyadaty.com/assets/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Eyadaty — Run your clinic. Keep medicine private." />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="ar_EG" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Eyadaty — Run your clinic. Keep medicine private." />
+    <meta name="twitter:description" content="Clinic management for private doctors in Egypt — Arabic and English." />
+    <meta name="twitter:image" content="https://eyadaty.com/assets/og-image.png" />
+
+    <!-- Structured data. Offers and FAQ are refreshed from content/ at runtime. -->
+    <script type="application/ld+json" id="ld-org">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://eyadaty.com/#org",
+            "name": "Eyadaty",
+            "alternateName": "عيادتى",
+            "url": "https://eyadaty.com/",
+            "logo": "https://eyadaty.com/assets/icon-512.png",
+            "areaServed": "EG"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://eyadaty.com/#website",
+            "url": "https://eyadaty.com/",
+            "name": "Eyadaty",
+            "inLanguage": ["en", "ar"],
+            "publisher": { "@id": "https://eyadaty.com/#org" }
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json" id="ld-app"></script>
+    <script type="application/ld+json" id="ld-faq"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap"
@@ -117,13 +176,13 @@
       .chrome b { width: 10px; height: 10px; border-radius: 50%; background: #dfe5ec; }
       .chrome span { margin-inline-start: 10px; font-size: 11px; color: var(--muted); background: #fff; border-radius: 6px; padding: 2px 10px; }
       .mock { display: grid; grid-template-columns: 120px minmax(0, 1fr); min-height: 380px; font-size: 11px; }
-      .mock aside { background: var(--night); color: #c5d7dc; padding: 14px 10px; display: grid; align-content: start; gap: 4px; }
-      .mock aside .mlogo { display: flex; gap: 7px; align-items: center; color: #fff; font-weight: 800; margin-bottom: 12px; font-size: 12px; }
-      .mock aside .mlogo i { font-style: normal; width: 22px; height: 22px; border-radius: 7px; background: #d9f3ed; color: #125e5b; display: grid; place-items: center; }
-      .mock aside div.mi { padding: 7px 8px; border-radius: 7px; }
-      .mock aside div.mi.on { background: #214955; color: #fff; box-shadow: inset 3px 0 var(--mint); }
-      html[dir="rtl"] .mock aside div.mi.on { box-shadow: inset -3px 0 var(--mint); }
-      .mock main { background: var(--bg); padding: 14px; display: grid; gap: 10px; align-content: start; }
+      .mock .mside { background: var(--night); color: #c5d7dc; padding: 14px 10px; display: grid; align-content: start; gap: 4px; }
+      .mock .mside .mlogo { display: flex; gap: 7px; align-items: center; color: #fff; font-weight: 800; margin-bottom: 12px; font-size: 12px; }
+      .mock .mside .mlogo i { font-style: normal; width: 22px; height: 22px; border-radius: 7px; background: #d9f3ed; color: #125e5b; display: grid; place-items: center; }
+      .mock .mside div.mi { padding: 7px 8px; border-radius: 7px; }
+      .mock .mside div.mi.on { background: #214955; color: #fff; box-shadow: inset 3px 0 var(--mint); }
+      html[dir="rtl"] .mock .mside div.mi.on { box-shadow: inset -3px 0 var(--mint); }
+      .mock .mmain { background: var(--bg); padding: 14px; display: grid; gap: 10px; align-content: start; }
       .mock .mh { font-weight: 800; font-size: 15px; letter-spacing: -.3px; }
       .mock .mh small { display: block; font-size: 9px; color: var(--brand); letter-spacing: 1px; text-transform: uppercase; }
       .mkpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
@@ -283,7 +342,7 @@
       .demo-page { min-height: 100vh; background: var(--night); color: #eaf4f7; display: grid; grid-template-rows: auto 1fr; }
       .demo-bar { display: flex; align-items: center; gap: 14px; padding: 14px 22px; border-bottom: 1px solid #2d4b57; flex-wrap: wrap; }
       .demo-bar .logo { color: #fff; }
-      .demo-bar .logomark { background: #d9f3ed; color: #125e5b; }
+      .demo-bar .logomark { box-shadow: 0 0 0 1px #2d4b57; }
       .seg { display: inline-flex; background: var(--night2); border: 1px solid #31535e; border-radius: 12px; padding: 4px; gap: 3px; }
       .seg button { border: 0; background: transparent; color: #9db7c0; padding: 8px 14px; border-radius: 9px; font-weight: 700; font-size: 13px; }
       .seg button.on { background: #fff; color: var(--night); }
@@ -329,7 +388,7 @@
         .navend .btn.ghost, .navend .reqbtn { display: none; }
         .features, .steps, .plans { grid-template-columns: 1fr; }
         .mock { grid-template-columns: 1fr; }
-        .mock aside { display: none; }
+        .mock .mside { display: none; }
         .mkpis { grid-template-columns: 1fr 1fr; }
         .float { display: none; }
         .browser, html[dir="rtl"] .browser { transform: none; }
@@ -353,7 +412,7 @@
     <div id="site">
       <header class="nav" id="nav">
         <div class="wrap">
-          <a class="logo" href="#top"><span class="logomark">✚</span><span data-i18n="brand">Eyadaty</span></a>
+          <a class="logo" href="#top"><img class="logomark" src="assets/icon.svg" alt="" width="36" height="36" /><span data-i18n="brand">Eyadaty</span></a>
           <nav class="navlinks" onclick="document.getElementById('nav').classList.remove('open')">
             <a href="#features" data-i18n="nav.features">Features</a>
             <a href="#roles" data-i18n="nav.roles">Doctor &amp; nurse</a>
@@ -397,15 +456,15 @@
               <div class="browser">
                 <div class="chrome"><b></b><b></b><b></b><span>app.eyadaty.com</span></div>
                 <div class="mock">
-                  <aside>
+                  <div class="mside">
                     <div class="mlogo"><i>✚</i><span data-i18n="brand">Eyadaty</span></div>
                     <div class="mi on" data-i18n="m.overview">Overview</div>
                     <div class="mi" data-i18n="m.patients">Patients</div>
                     <div class="mi" data-i18n="m.visits">Visits</div>
                     <div class="mi" data-i18n="m.queue">Clinic queue</div>
                     <div class="mi" data-i18n="m.reports">Reports</div>
-                  </aside>
-                  <main>
+                  </div>
+                  <div class="mmain">
                     <div class="mh"><small data-i18n="m.eyebrow">Doctor dashboard</small><span data-i18n="m.hello">Good afternoon, Dr. Ahmed</span></div>
                     <div class="mkpis">
                       <div class="mcard"><span data-i18n="m.k1">Total visits</span><b>24</b></div>
@@ -419,7 +478,7 @@
                       <div class="mrow"><span class="mnum">3</span><span data-i18n="m.r3">Sara Mostafa · Follow-up</span><span class="pill amber" data-i18n="s.waiting">Waiting</span></div>
                       <div class="mrow"><span class="mnum">4</span><span data-i18n="m.r4">Youssef Adel · New visit</span><span class="pill blue" data-i18n="s.scheduled">Scheduled</span></div>
                     </div>
-                  </main>
+                  </div>
                 </div>
               </div>
               <div class="float f1"><span class="fi" style="background: var(--amberbg); color: var(--amber)">☷</span><div><b data-i18n="f1.t">Queue updated</b><small data-i18n="f1.s">Sara moved to #2 · by Nurse Nour</small></div></div>
@@ -629,7 +688,7 @@
 
       <footer>
         <div class="wrap">
-          <a class="logo" href="#top"><span class="logomark">✚</span><span data-i18n="brand">Eyadaty</span></a>
+          <a class="logo" href="#top"><img class="logomark" src="assets/icon.svg" alt="" width="36" height="36" /><span data-i18n="brand">Eyadaty</span></a>
           <span data-i18n="ft.t">© 2026 Eyadaty. Clinic management for private practices.</span>
           <span><a href="#/demo/doctor" data-i18n="ft.d">Doctor demo</a> · <a href="#/demo/nurse" data-i18n="ft.n">Nurse demo</a></span>
         </div>
@@ -639,7 +698,7 @@
     <!-- ======================= DEMO PREVIEW PAGE ======================= -->
     <div id="demo" class="demo-page hidden">
       <div class="demo-bar">
-        <a class="logo" href="#top"><span class="logomark">✚</span><span data-i18n="brand">Eyadaty</span></a>
+        <a class="logo" href="#top"><img class="logomark" src="assets/icon.svg" alt="" width="36" height="36" /><span data-i18n="brand">Eyadaty</span></a>
         <a class="btn light sm" href="#top"><span class="arrow">←</span> <span data-i18n="d.back">Back to site</span></a>
         <div class="seg" role="tablist" aria-label="Role">
           <button data-demo="doctor" onclick="location.hash='#/demo/doctor'" data-i18n="d.doc">Doctor workspace</button>
@@ -688,6 +747,9 @@
       try {
         LANG = localStorage.getItem("clinicflow.lang") === "ar" ? "ar" : "en";
       } catch (e) {}
+      // ?lang=ar|en (used by the hreflang links) wins over the saved choice.
+      const urlLang = new URLSearchParams(location.search).get("lang");
+      if (urlLang === "ar" || urlLang === "en") LANG = urlLang;
 
       // The English text in the markup is only a fallback; JSON wins when loaded.
       const SRC = new Map();
@@ -709,7 +771,9 @@
         const html = document.documentElement;
         html.lang = LANG;
         html.dir = LANG === "ar" ? "rtl" : "ltr";
-        document.title = LANG === "ar" ? "عيادتى — مساحة العمل الخاصة للعيادات الحديثة" : "Eyadaty — The private workspace for modern clinics";
+        if (t("meta.title")) document.title = t("meta.title");
+        if (t("meta.desc")) document.querySelector('meta[name="description"]').content = t("meta.desc");
+        document.querySelector('meta[property="og:locale"]').content = LANG === "ar" ? "ar_EG" : "en_US";
         document.querySelectorAll("[data-i18n],[data-i18n-html]").forEach((el) => {
           const key = el.dataset.i18n || el.dataset.i18nHtml;
           el.innerHTML = I18N[LANG][key] || (LANG === "en" && SRC.get(el)) || I18N.en[key] || SRC.get(el);
@@ -720,11 +784,51 @@
         });
         renderPlans();
         renderGuide();
+        renderStructuredData();
         const fr = document.getElementById("demoframe");
         if (fr.contentWindow && fr.getAttribute("src"))
           fr.contentWindow.postMessage({ type: "eyadaty:lang", lang: LANG }, "*");
       }
 
+      // Keeps the SoftwareApplication offers and FAQPage in sync with plans.json and the FAQ text.
+      function renderStructuredData() {
+        if (!PLANS) return;
+        const strip = (s) => String(s || "").replace(/<[^>]+>/g, "");
+        const app = {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: "Eyadaty",
+          applicationCategory: "MedicalApplication",
+          applicationSubCategory: "Clinic management",
+          operatingSystem: "Web",
+          inLanguage: ["en", "ar"],
+          description: t("meta.desc"),
+          publisher: { "@id": "https://eyadaty.com/#org" },
+          offers: PLANS.plans.flatMap((p) =>
+            PLANS.terms.map((x) => ({
+              "@type": "Offer",
+              name: `${L(p.name)} — ${L(x.label)}`,
+              price: p.prices[x.id],
+              priceCurrency: "EGP",
+              url: "https://eyadaty.com/#pricing",
+            })),
+          ),
+        };
+        const faq = {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          inLanguage: LANG,
+          mainEntity: [1, 2, 3, 4, 5, 6]
+            .filter((i) => t("q" + i))
+            .map((i) => ({
+              "@type": "Question",
+              name: strip(t("q" + i)),
+              acceptedAnswer: { "@type": "Answer", text: strip(t("a" + i)) },
+            })),
+        };
+        document.getElementById("ld-app").textContent = JSON.stringify(app);
+        document.getElementById("ld-faq").textContent = JSON.stringify(faq);
+      }
       function setTerm(term) {
         TERM = term;
         renderPlans();
