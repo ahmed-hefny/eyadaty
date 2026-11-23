@@ -53,7 +53,7 @@ Language choice is shared across all pages via `localStorage["clinicflow.lang"]`
 The demos share the doctor demo's CSS tokens (`--brand #176b67`, sidebar `#102f3d`, mint `#71d5bf`, `.card`, `.pill`, `.btn`, `.callout`, etc.). The nurse demo is the doctor CSS plus a small "Nurse workspace additions" block — keep new nurse styles in that block and reuse existing tokens. RTL is handled via `html[dir="rtl"]` overrides.
 
 ### SEO
-`index.html` head holds canonical/hreflang/Open Graph/Twitter tags and a static Organization/WebSite JSON-LD; `#ld-app` and `#ld-faq` are filled at runtime by `renderStructuredData()`. The production domain is assumed to be `https://eyadaty.com/` — it appears in `index.html`, `sitemap.xml` and `robots.txt`; change all three together. Demo pages are `noindex`.
+`index.html` head holds canonical/hreflang/Open Graph/Twitter tags and a static Organization/WebSite JSON-LD; `#ld-app` and `#ld-faq` are filled at runtime by `renderStructuredData()`. The site is published on GitHub Pages at `https://ahmed-hefny.github.io/eyadaty/` (public repo, `main` branch root); switch to the real domain once bought — it appears in `index.html`, `sitemap.xml` and `robots.txt`; change all three together. Demo pages are `noindex`.
 
 ### Assets
 `assets/icon.svg` and `assets/og-image.svg` are the sources; the PNGs (favicon, apple-touch, 192/512, maskable, og-image) were rendered from them with `sharp`. Re-render the PNGs if the SVGs change.

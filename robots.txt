@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://eyadaty.com/sitemap.xml
+Sitemap: https://ahmed-hefny.github.io/eyadaty/sitemap.xml
